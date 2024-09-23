@@ -1,10 +1,31 @@
-import e from "express";
-
 /******************************User queries************************** */
 export const findUserQuery = "SELECT * FROM users WHERE email = $1 ";
 export const AddUserQuery =
   "INSERT INTO users (firstname,lastname,email, password,phone_number) VALUES ($1, $2, $3, $4, $5)";
-
+export const emailQuery =
+  "UPDATE users SET email_token = $1 WHERE email = $2 RETURNING *";
+export const activateAccountQuery =
+  "UPDATE users SET activated_account = true , email_token = NULL WHERE user_id = $1";
+export const passwordResetQuery =
+  "UPDATE users SET reset_password_token = $1, password_token_expiration = $2  WHERE user_id = $3";
+export const recoverPasswordQuery =
+  "UPDATE users SET password = $1,password_token_expiration=NULL,reset_password_token=NULL WHERE user_id = $2";
+export const deleteUserQuery = "delete from users where user_id=$1";
+export const updateUserQuery = (data) => {
+  const setClauses = [];
+  const values = [];
+  Object.keys(data).forEach((key, index) => {
+    setClauses.push(`${key}=$${index + 1}`);
+    values.push(data[key]);
+  });
+  const query = `Update users set ${setClauses.join(",")} where user_id=$${
+    values.length + 1
+  }`;
+  return {
+    query,
+    values,
+  };
+};
 /******************************Job queries************************** */
 export const getJobsQuery = "SELECT * FROM jobs  ORDER BY created_at DESC";
 export const postJobQuery =
