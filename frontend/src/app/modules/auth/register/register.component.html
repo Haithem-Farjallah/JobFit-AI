@@ -1,0 +1,159 @@
+<div class="flex h-screen">
+  <img src="/rh.jpg" alt="rh image" class="h-full hidden lg:inline-block" />
+  <div
+    class="w-full mx-auto max-w-3xl flex flex-col items-center justify-center"
+  >
+    <h1
+      class="sm:text-5xl text-4xl font-semibold text-[#202430] w-2/3 text-center"
+    >
+      Create an account
+    </h1>
+    <form class="w-2/3 mb-4" (ngSubmit)="handleRegister(f)" #f="ngForm">
+      <div class="flex gap-2">
+        <div class="flex flex-col w-[49%]">
+          <label
+            for="firstname"
+            class="block text-sm font-medium text-gray-700 my-2"
+            >firstname</label
+          >
+          <input
+            type="text"
+            id="firstname"
+            name="firstname"
+            placeholder="Enter firstname"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            ngModel
+            required
+            #firstname="ngModel"
+          />
+          <div
+            *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)"
+            class="text-red-500 text-sm font-medium mt-1"
+          >
+            <p *ngIf="firstname.errors?.['required']">firstname is required.</p>
+          </div>
+        </div>
+        <div class="flex flex-col w-[49%]">
+          <label
+            for="lastname"
+            class="block text-sm font-medium text-gray-700 my-2"
+            >lastname</label
+          >
+          <input
+            type="text"
+            id="lastname"
+            name="lastname"
+            placeholder="Enter lastname"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            ngModel
+            required
+            #lastname="ngModel"
+          />
+          <div
+            *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)"
+            class="text-red-500 text-sm font-medium mt-1"
+          >
+            <p *ngIf="lastname.errors?.['required']">lastname is required.</p>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2">
+        <label for="email" class="block text-sm font-medium text-gray-700 my-2"
+          >Phone number</label
+        >
+        <input
+          type="tel"
+          id="number"
+          name="phone_number"
+          class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          placeholder="Enter phone number"
+          ngModel
+          required
+          maxlength="8"
+          pattern="^[925][0-9]{7}$"
+          inputmode="numeric"
+          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+          #phone_number="ngModel"
+        />
+        <div
+          *ngIf="phone_number.invalid && phone_number.touched"
+          class="text-red-500 text-sm font-medium mt-1"
+        >
+          <p *ngIf="phone_number.errors?.['required']">
+            Phone number is required.
+          </p>
+          <p *ngIf="phone_number.errors?.['pattern']">
+            Please enter a valid phone number
+          </p>
+        </div>
+      </div>
+      <div class="mb-2">
+        <label for="email" class="block text-sm font-medium text-gray-700 my-2"
+          >Email Address</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          placeholder="Enter email address"
+          email
+          ngModel
+          required
+          #email="ngModel"
+        />
+        <div
+          *ngIf="email.invalid && (email.dirty || email.touched)"
+          class="text-red-500 text-sm font-medium mt-1"
+        >
+          <p *ngIf="email.errors?.['required']">Email is required.</p>
+          <p *ngIf="email.errors?.['email']">
+            Please enter a valid email address.
+          </p>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label
+          for="password"
+          class="block text-sm font-medium text-gray-700 my-2"
+          >Password</label
+        >
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          placeholder="Enter password"
+          ngModel
+          required
+          #password="ngModel"
+        />
+        <div
+          *ngIf="password.invalid && (password.dirty || password.touched)"
+          class="text-red-500 text-sm font-medium mt-1"
+        >
+          <p *ngIf="password.errors?.['required']">Password is required.</p>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="f.invalid || loading"
+        class="w-full bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed text-white p-2 rounded-lg shadow hover:bg-indigo-700"
+      >
+        <ng-container *ngIf="loading">Loading...</ng-container>
+        <ng-container *ngIf="!loading">Sign Up</ng-container>
+      </button>
+    </form>
+    <div class="text-sm flex w-2/3">
+      <p class="">
+        Already have an account
+        <span
+          routerLink="/auth/login"
+          class="text-indigo-600 font-medium cursor-pointer"
+          >Log In !</span
+        >
+      </p>
+    </div>
+  </div>
+</div>
