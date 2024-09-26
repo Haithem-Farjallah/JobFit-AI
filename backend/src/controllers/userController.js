@@ -41,6 +41,30 @@ const activateAccount = async (req, res) => {
   }
 };
 
+const verifyPasswordToken = async (req, res) => {
+  try {
+    const { token } = req.query;
+    if (!token) {
+      return res.status(400).json({ message: "Invalid token" });
+    }
+    const response = await pool.query(
+      "SELECT user_id , password_token_expiration FROM users WHERE reset_password_token = $1",
+      [token]
+    );
+    if (response.rows.length === 0) {
+      return res.status(400).json({ message: "Invalid token" });
+    }
+    const expiration = response.rows[0].password_token_expiration;
+    if (expiration < new Date()) {
+      return res.status(400).json({ message: "Token expired" });
+    }
+    res.status(200).json({ message: "token is valid" });
+  } catch (error) {
+    console.error("Error verifying password token:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 const recoverPassword = async (req, res) => {
   try {
     const id = req.user;
@@ -59,4 +83,5 @@ export default {
   recoverPassword,
   deleteUser,
   updateUser,
+  verifyPasswordToken,
 };

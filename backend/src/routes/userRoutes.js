@@ -11,6 +11,7 @@ router.get(
   verifyEmailToken,
   userController.activateAccount
 );
+router.get("/reset-password", userController.verifyPasswordToken);
 router.post(
   "/reset-password",
   verifyPasswordToken,

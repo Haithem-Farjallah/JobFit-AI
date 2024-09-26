@@ -108,11 +108,25 @@ const applyJobController = async (req, res) => {
       resume_url,
       candidat_note,
     ];
-    await pool.query(applyJobQuery, values);
+    const application = await pool.query(applyJobQuery, values);
+    const application_id = application.rows[0].id;
     res.status(201).json({ message: "Application Submitted" });
     //extract data from candidat resume
     const resumeData = await extractPdfData(req.file.path); // Use await to get the extracted PDF text// This will now log the CV text content
-    runGemeni(valid.rows[0], resumeData);
+    const aiResult = await runGemeni(valid.rows[0], resumeData);
+    let matchPercentage = aiResult.match_percentage;
+    matchPercentage = parseFloat(matchPercentage.replace("%", ""));
+    await pool.query(
+      "INSERT INTO results (application_id, job_keywords, resume_keywords,matched_keywords,score,summary) VALUES ($1, $2, $3,$4,$5,$6)",
+      [
+        application_id,
+        aiResult.job_description_keywords,
+        aiResult.resume_keywords,
+        aiResult.matched_keywords,
+        matchPercentage,
+        aiResult.summary,
+      ]
+    );
   } catch (error) {
     deleteFile(req.file?.filename);
     console.log(error);

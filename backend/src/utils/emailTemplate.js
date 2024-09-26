@@ -23,7 +23,7 @@ const activateAccount = (username, token) => {
         <p>Dear ${username},</p>
         <p>Thank you for registering with us! We’re excited to have you on board.</p>
         <p>To complete your registration and activate your account, please click the button below:</p>
-        <a href="http://yourwebsite.com/activate?token=${token}" class="button"><span class="link">Activate Your Account</span></a>
+        <a href="${process.env.FRONTEND_URL}/auth/activate-account?token=${token}" class="button"><span class="link">Activate Your Account</span></a>
         <p>If you did not create an account, please disregard this email.</p>
         <div class="footer">
             <p>Best regards</p>
@@ -61,7 +61,7 @@ const passwordRecovery = (username, token) => {
                     <p>Dear ${username},</p>
                     <p>We received a request to reset your password for your account. If you did not request this, you can safely ignore this email.</p>
                     <p>To reset your password, please click the button below:</p>
-                    <a href="http://yourwebsite.com/reset-password?token=${token}" class="button"><span class="link">Reset Your Password</span></a>
+                    <a href="${process.env.FRONTEND_URL}/auth/recover-password?token=${token}" class="button"><span class="link">Reset Your Password</span></a>
                     <p>This link will expire in <b> 1 day </b>, so please use it as soon as possible.</p>
                     <div class="footer">
                         <p>Best regards</p>

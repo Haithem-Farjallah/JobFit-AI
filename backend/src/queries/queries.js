@@ -46,5 +46,14 @@ export const updateJobQuery = (data, id) => {
 };
 export const deleteQuery = `DELETE FROM jobs WHERE job_id = $1`;
 
-export const applyJobQuery = `INSERT INTO applications (job_id,firstname,lastname,email,phone_number,resume_url,candidat_note) VALUES ($1, $2, $3, $4, $5, $6, $7)`;
+export const applyJobQuery = `INSERT INTO applications (job_id,firstname,lastname,email,phone_number,resume_url,candidat_note) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`;
 export const validateJobIdQuery = `SELECT title,description,experience_level FROM jobs WHERE job_id = $1`;
+
+// ******************************Applications queries************************** */
+
+export const getApplicationsQuery = (limit, offset, job_id) => {
+  return {
+    query: `SELECT * FROM applications WHERE job_id = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3`,
+    values: [job_id, limit, offset],
+  };
+};
