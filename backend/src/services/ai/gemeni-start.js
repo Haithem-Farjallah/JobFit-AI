@@ -12,7 +12,11 @@ export const runGemeni = async (data, cvText) => {
     const requestParts = [prompt, cvText];
     // Pass the request parts to generateContent
     const result = await model.generateContent(requestParts);
-    console.log(result.response.text());
+    let jsonResponseText = result.response.text();
+    jsonResponseText = jsonResponseText.replace(/```json|```/g, ""); // Remove markdown formatting
+
+    const parsedResponse = JSON.parse(jsonResponseText);
+    return parsedResponse;
   } catch (error) {
     console.error("Error generating response:", error);
   }

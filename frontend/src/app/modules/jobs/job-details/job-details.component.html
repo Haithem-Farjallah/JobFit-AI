@@ -1,0 +1,333 @@
+<div class="lg:max-w-7xl px-2 maw-w-4xl mx-auto">
+  <div class="py-2 flex justify-between">
+    <div class="flex items-center gap-1 md:gap-3">
+      <h1 class="font-semibold text-lg md:text-2xl">
+        {{ jobDetails.title }}
+      </h1>
+      <p
+        class="rounded-xl bg-[#fceeee] text-[#e05151] font-medium px-3 py-1 text-xs"
+      >
+        {{ jobDetails.experience_level }}
+      </p>
+      <p
+        class="rounded-xl bg-[#e7f0fa] text-[#0a65cc] font-medium px-3 py-1 text-xs"
+      >
+        {{ jobDetails.work_type }}
+      </p>
+    </div>
+    <div class="text-center">
+      <button
+        (click)="openApplication()"
+        class="flex items-center gap-2 text-white bg-[#0a65cc] px-8 py-2 rounded cursor-pointer mb-2"
+      >
+        <p class="hidden md:block">Apply Now</p>
+        <img src="/arrow_white.png" alt="arrow" />
+      </button>
+      <p class="text-xs text-gray-500 font-medium">
+        Job expire in :
+        <span class="text-[#e05151] font-medium"
+          >{{ formattedExpirationDate }}
+        </span>
+      </p>
+    </div>
+  </div>
+  <div class="w-full flex flex-wrap">
+    <!--Description part-->
+    <div class="lg:w-2/3 w-full p-3">
+      <div class="space-y-2 my-2">
+        <h1 class="text-xl font-semibold">Description</h1>
+        <p class="text-gray-600 sm:text-lg text-sm">
+          {{ jobDetails.description }}
+        </p>
+      </div>
+      <div class="flex items-center gap-2">
+        <p class="text-sm font-semibold">share this job :</p>
+        <div class="flex items-center gap-2">
+          <div
+            class="flex gap-2 border border-blue-100 p-2 text-sm rounded cursor-pointer"
+          >
+            <img src="/facebook.png" alt="facebook" />
+            <span class="sm:block hidden">Facebook</span>
+          </div>
+          <div
+            class="flex gap-2 border border-blue-100 p-2 text-sm rounded cursor-pointer"
+          >
+            <img src="/linkedin.png" alt="linkedin" class="h-5" />
+            <span class="sm:block hidden">Linkedin</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-1/3">
+      <div class="border border-blue-300 rounded pl-3 py-4 my-4">
+        <h1 class="text-lg font-semibold mb-6 text-gray-800">Job Overview</h1>
+        <div class="flex flex-wrap gap-10 pl-2">
+          <div *ngFor="let v of overview" class="my-1">
+            <div class="flex flex-col gap-1 text-xs">
+              <img [src]="v.image" [alt]="v.image" class="h-6 w-6" />
+              <p class="text-gray-500 font-medium">{{ v.title }}</p>
+              <p class="font-semibold text-[#191F33]">{{ v.value }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="border border-blue-300 rounded pl-3 py-4 my-4">
+          <div class="flex items-center gap-2 mb-5">
+            <img
+              [src]="jobDetails.image_url"
+              alt="rh image"
+              class="h-10 w-10 rounded-full"
+            />
+            <div class="flex flex-col">
+              <h1 class="font-medium text-lg">
+                {{ jobDetails.firstname + " " + jobDetails.lastname }}
+              </h1>
+              <p class="font-medium text-gray-500 text-sm">Recruter</p>
+            </div>
+          </div>
+          <div class="my-2 pr-4">
+            <div class="flex justify-between items-center mb-2">
+              <div class="flex items-center gap-1">
+                <img src="/email.png" alt="email" class="h-4" />
+                <p class="text-gray-500">email:</p>
+              </div>
+              <p class="text-sm font-medium text-gray-900">
+                {{ jobDetails.email }}
+              </p>
+            </div>
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-1">
+                <img src="/phone.png" alt="number" class="h-[14px]" />
+                <p class="text-gray-500">phone number:</p>
+              </div>
+              <p class="text-sm font-medium text-gray-900">
+                {{ jobDetails.phone_number }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Application popup with custom scrollbar -->
+<ng-container *ngIf="apply">
+  <div
+    class="fixed inset-0 z-50 h- py-5 flex items-center justify-center bg-[rgba(0,0,0,0.7)] overflow-y-auto custom-scroll"
+  >
+    <div class="bg-white mx-auto max-w-3xl w-full rounded p-5 my-auto">
+      <div class="flex justify-between">
+        <div class="mt-12">
+          <h1 class="text-3xl text-[#25324B] font-semibold mb-4">
+            Submit Your Application
+          </h1>
+          <p class="mb-6 text-gray-500 font-medium">
+            The following is required and will only be shared with us.
+          </p>
+        </div>
+        <img
+          src="/close.png"
+          alt="close popup"
+          class="h-5 cursor-pointer"
+          (click)="closeApplication()"
+        />
+      </div>
+      <div class="mx-auto max-w-2xl">
+        <form (ngSubmit)="handleSubmit(f)" #f="ngForm" novalidate>
+          <!-- First Name -->
+          <div class="mb-4">
+            <label
+              for="firstName"
+              class="block text-sm font-medium text-gray-700"
+              >First name</label
+            >
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              placeholder="Enter your first name"
+              ngModel
+              required
+              #firstName="ngModel"
+            />
+            <p
+              *ngIf="firstName.invalid && firstName.touched"
+              class="text-red-500 text-sm"
+            >
+              First name is required.
+            </p>
+          </div>
+
+          <!-- Last Name -->
+          <div class="mb-4">
+            <label
+              for="lastName"
+              class="block text-sm font-medium text-gray-700"
+              >Last name</label
+            >
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              placeholder="Enter your last name"
+              ngModel
+              required
+              #lastName="ngModel"
+            />
+            <p
+              *ngIf="lastName.invalid && lastName.touched"
+              class="text-red-500 text-sm"
+            >
+              Last name is required.
+            </p>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700"
+              >Email address</label
+            >
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              placeholder="Enter your email address"
+              ngModel
+              required
+              email
+              #email="ngModel"
+            />
+            <p
+              *ngIf="email.invalid && email.touched"
+              class="text-red-500 text-sm"
+            >
+              Please enter a valid email.
+            </p>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="mb-4">
+            <label for="phone" class="block text-sm font-medium text-gray-700"
+              >Phone number</label
+            >
+            <input
+              type="tel"
+              id="phone_number"
+              name="phone"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              placeholder="Enter your phone number"
+              ngModel
+              required
+              maxlength="8"
+              pattern="^[925][0-9]{7}$"
+              #phone="ngModel"
+            />
+            <p
+              *ngIf="phone.invalid && phone.touched"
+              class="text-red-500 text-sm"
+            >
+              Phone number must be 8 digits and start with 9, 2, or 5.
+            </p>
+          </div>
+
+          <!-- Additional Information -->
+          <div class="mb-4">
+            <label for="info" class="block text-sm font-medium text-gray-700"
+              >Additional information</label
+            >
+            <textarea
+              id="info"
+              ngModel
+              required
+              name="candidat_note"
+              #candidat_note="ngModel"
+              rows="4"
+              maxlength="500"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm resize-none"
+              placeholder="Add a cover letter or anything else you want to share"
+              (input)="onInput($event)"
+            ></textarea>
+            <p class="text-sm text-right text-gray-500 mt-1">
+              {{ 500 - (additionalInfo.length || 0) }} characters remaining
+            </p>
+            <p
+              *ngIf="candidat_note.invalid && candidat_note.touched"
+              class="text-red-500 text-sm"
+            >
+              Additional information is required.
+            </p>
+          </div>
+
+          <!-- Resume Upload -->
+          <div class="mt-4 mb-6">
+            <p class="block text-sm font-medium text-gray-700">
+              Attach your resume
+            </p>
+            <label
+              for="file-upload"
+              class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-gray-300 rounded-md cursor-pointer"
+            >
+              <div class="space-y-1 text-center">
+                <svg
+                  class="mx-auto h-12 w-12 text-gray-400"
+                  stroke="currentColor"
+                  fill="none"
+                  viewBox="0 0 48 48"
+                >
+                  <path
+                    d="M28 8H10a2 2 0 00-2 2v28a2 2 0 002 2h28a2 2 0 002-2V20l-12-12zm0 0v12h12"
+                  />
+                </svg>
+                <span>Attach Resume/CV</span> <br />
+                <span class="text-xs text-gray-500"> PDF</span>
+                <input
+                  type="file"
+                  id="file-upload"
+                  name="resume"
+                  class="sr-only"
+                  (change)="onFileSelected($event)"
+                  required
+                  ngModel
+                  #resume="ngModel"
+                />
+              </div>
+            </label>
+            <p *ngIf="selectedFile?.name" class="text-sm text-gray-500 mt-2">
+              File: {{ selectedFile?.name }}
+            </p>
+            <p
+              *ngIf="resume.invalid && resume.touched && invalidFile"
+              class="text-red-500 text-sm"
+            >
+              Resume is required.
+            </p>
+            <p class="text-red-500 text-sm" *ngIf="resume.valid && invalidFile">
+              Resume must be a PDF file
+            </p>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="mb-4">
+            <button
+              type="submit"
+              class="w-full disabled:cursor-not-allowed disabled:opacity-15 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+              [disabled]="f.invalid"
+            >
+              Submit Application
+            </button>
+          </div>
+          <p class="text-sm text-gray-500">
+            By sending the request, you confirm that you accept our
+            <a href="#" class="text-indigo-600 underline">Terms of Service</a>
+            and
+            <a href="#" class="text-indigo-600 underline">Privacy Policy</a>.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-container>

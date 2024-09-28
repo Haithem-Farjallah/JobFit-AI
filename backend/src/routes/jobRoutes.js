@@ -6,6 +6,7 @@ import { uploadSingle } from "../middlewares/multer.js";
 const router = express.Router();
 
 router.get("/", jobController.getJobsController);
+router.get("/:id", jobController.getSingleJobController);
 router.post("/", verifyToken, jobController.postjobController);
 router.patch("/:id", verifyToken, jobController.updateJobController);
 router.delete("/:id", verifyToken, jobController.deleteJobController);

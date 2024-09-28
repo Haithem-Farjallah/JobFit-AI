@@ -2,7 +2,9 @@ import pool from "../config/DB.js";
 import {
   applyJobQuery,
   deleteQuery,
+  existingemailQuery,
   getJobsQuery,
+  getSingleJobQuery,
   postJobQuery,
   updateJobQuery,
   validateJobIdQuery,
@@ -12,8 +14,26 @@ import extractPdfData from "../services/ai/resumeService.js";
 import { runGemeni } from "../services/ai/gemeni-start.js";
 const getJobsController = async (req, res) => {
   try {
-    const jobs = await pool.query(getJobsQuery);
+    const values = [new Date().toISOString()];
+    const jobs = await pool.query(getJobsQuery, values);
     return res.status(200).json({ jobs: jobs.rows });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+const getSingleJobController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(400).json({ message: "Job id is required" });
+    }
+    const job = await pool.query(getSingleJobQuery, [id]);
+    if (!job.rows[0]) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+    return res.status(200).json({ job: job.rows[0] });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -82,6 +102,7 @@ const deleteJobController = async (req, res) => {
   }
 };
 const applyJobController = async (req, res) => {
+  console.log(req.body);
   try {
     if (!req.file) {
       return res.status(400).json({ message: "Resume file is required." });
@@ -98,6 +119,13 @@ const applyJobController = async (req, res) => {
       deleteFile(req.file.filename);
       return res.status(400).json({ message: "Missing required fields" });
     }
+    const existingemail = await pool.query(existingemailQuery, [email, job_id]);
+    if (existingemail.rows[0]) {
+      deleteFile(req.file.filename);
+      return res
+        .status(403)
+        .json({ message: "You have already applied for this job." });
+    }
     const resume_url = req.file.filename;
     const values = [
       job_id,
@@ -108,11 +136,25 @@ const applyJobController = async (req, res) => {
       resume_url,
       candidat_note,
     ];
-    await pool.query(applyJobQuery, values);
+    const application = await pool.query(applyJobQuery, values);
+    const application_id = application.rows[0].id;
     res.status(201).json({ message: "Application Submitted" });
     //extract data from candidat resume
     const resumeData = await extractPdfData(req.file.path); // Use await to get the extracted PDF text// This will now log the CV text content
-    runGemeni(valid.rows[0], resumeData);
+    const aiResult = await runGemeni(valid.rows[0], resumeData);
+    let matchPercentage = aiResult.match_percentage;
+    matchPercentage = parseFloat(matchPercentage.replace("%", ""));
+    await pool.query(
+      "INSERT INTO results (application_id, job_keywords, resume_keywords,matched_keywords,score,summary) VALUES ($1, $2, $3,$4,$5,$6)",
+      [
+        application_id,
+        aiResult.job_description_keywords,
+        aiResult.resume_keywords,
+        aiResult.matched_keywords,
+        matchPercentage,
+        aiResult.summary,
+      ]
+    );
   } catch (error) {
     deleteFile(req.file?.filename);
     console.log(error);
@@ -122,6 +164,7 @@ const applyJobController = async (req, res) => {
 
 export default {
   getJobsController,
+  getSingleJobController,
   postjobController,
   updateJobController,
   deleteJobController,
