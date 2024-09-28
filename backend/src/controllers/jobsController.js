@@ -2,7 +2,9 @@ import pool from "../config/DB.js";
 import {
   applyJobQuery,
   deleteQuery,
+  existingemailQuery,
   getJobsQuery,
+  getSingleJobQuery,
   postJobQuery,
   updateJobQuery,
   validateJobIdQuery,
@@ -12,8 +14,26 @@ import extractPdfData from "../services/ai/resumeService.js";
 import { runGemeni } from "../services/ai/gemeni-start.js";
 const getJobsController = async (req, res) => {
   try {
-    const jobs = await pool.query(getJobsQuery);
+    const values = [new Date().toISOString()];
+    const jobs = await pool.query(getJobsQuery, values);
     return res.status(200).json({ jobs: jobs.rows });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+const getSingleJobController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(400).json({ message: "Job id is required" });
+    }
+    const job = await pool.query(getSingleJobQuery, [id]);
+    if (!job.rows[0]) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+    return res.status(200).json({ job: job.rows[0] });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -82,6 +102,7 @@ const deleteJobController = async (req, res) => {
   }
 };
 const applyJobController = async (req, res) => {
+  console.log(req.body);
   try {
     if (!req.file) {
       return res.status(400).json({ message: "Resume file is required." });
@@ -97,6 +118,13 @@ const applyJobController = async (req, res) => {
     if (!firstname || !lastname || !email || !candidat_note || !phone_number) {
       deleteFile(req.file.filename);
       return res.status(400).json({ message: "Missing required fields" });
+    }
+    const existingemail = await pool.query(existingemailQuery, [email, job_id]);
+    if (existingemail.rows[0]) {
+      deleteFile(req.file.filename);
+      return res
+        .status(403)
+        .json({ message: "You have already applied for this job." });
     }
     const resume_url = req.file.filename;
     const values = [
@@ -136,6 +164,7 @@ const applyJobController = async (req, res) => {
 
 export default {
   getJobsController,
+  getSingleJobController,
   postjobController,
   updateJobController,
   deleteJobController,

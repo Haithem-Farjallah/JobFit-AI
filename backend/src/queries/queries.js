@@ -27,7 +27,9 @@ export const updateUserQuery = (data) => {
   };
 };
 /******************************Job queries************************** */
-export const getJobsQuery = "SELECT * FROM jobs  ORDER BY created_at DESC";
+export const getJobsQuery = `SELECT job_id , title, experience_level, work_type,expiration_date FROM jobs WHERE expiration_date > $1 ORDER BY created_at DESC`;
+export const getSingleJobQuery =
+  "SELECT J.title, J.description,J.min_salary,J.max_salary,J.experience_level,J.work_type,J.expiration_date,J.created_at,J.skills,U.firstname,U.lastname,U.image_url,U.email,U.phone_number FROM jobs As J INNER JOIN users as U ON J.posted_by = U.user_id WHERE J.job_id = $1 ";
 export const postJobQuery =
   "INSERT INTO jobs (title,description,min_salary,max_salary,experience_level,work_type,expiration_date,posted_by) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
 export const updateJobQuery = (data, id) => {
@@ -51,6 +53,8 @@ export const validateJobIdQuery = `SELECT title,description,experience_level FRO
 
 // ******************************Applications queries************************** */
 
+export const existingemailQuery =
+  "select exists(select 1 from applications where email=$1 and job_id=$2)";
 export const getApplicationsQuery = (limit, offset, job_id) => {
   return {
     query: `SELECT * FROM applications WHERE job_id = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3`,
