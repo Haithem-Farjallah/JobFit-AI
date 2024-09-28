@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
 
 @Component({
@@ -8,5 +7,9 @@ import { AuthService } from '@core/services/auth.service';
   styleUrl: './layouts.component.css',
 })
 export class LayoutsComponent {
-  constructor(private router: Router, private authService: AuthService) {}
+  isAuthenticated: boolean = false;
+  constructor(private authService: AuthService) {}
+  ngOnInit() {
+    this.isAuthenticated = this.authService.isAuthenticated();
+  }
 }

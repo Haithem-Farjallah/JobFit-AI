@@ -1,0 +1,38 @@
+<div class="fle flex-col h-screen">
+  <div class="flex flex-col mt-5 h-3/4">
+    <img src="/Logo.png" alt="logo" class="mb-8 pl-5" />
+    <div class="flex flex-col gap-2 mb-5">
+      <div *ngFor="let c of content">
+        <div
+          [routerLink]="c.link"
+          routerLinkActive="isActive"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="cursor-pointer flex items-center gap-2 pl-5 py-3 font-medium text-sm text-[#7C8493]"
+        >
+          <img [src]="c.image" alt="image" class="h-5" />
+          <h1 class="pt-1">{{ c.label }}</h1>
+        </div>
+      </div>
+    </div>
+    <hr class="bg-gray-400" />
+    <div
+      class="cursor-pointer flex flex-col gap-5 pl-5 py-5 font-medium text-sm text-[#7C8493]"
+    >
+      <div class="flex gap-2">
+        <img src="/settings.png" alt="settings" class="h-5" />
+        <h1>settings</h1>
+      </div>
+      <div class="flex gap-2">
+        <img src="/settings.png" alt="settings" class="h-5" />
+        <h1>Logout</h1>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center h-1/4 pl-5 gap-2">
+    <img src="/avatar.png" alt="avatar" class="h-7" />
+    <div class="text-xs">
+      <h1 class="font-semibold">Haithem Farjallah</h1>
+      <p class="text-[#7C8493]">haithem&#64;gmail.com</p>
+    </div>
+  </div>
+</div>

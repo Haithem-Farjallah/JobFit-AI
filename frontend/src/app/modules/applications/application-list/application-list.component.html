@@ -1,0 +1,80 @@
+<div class="h-1/6 my-2 border-b border-gray-300 flex justify-end">
+  <button
+    routerLink="/add-job"
+    class="px-4 py-2 my-2 bg-[#4640de] text-white rounded flex items-center gap-1"
+  >
+    <img src="/add.png" alt="add" class="h-5" />
+    <span> Post a job</span>
+  </button>
+</div>
+
+<div>
+  <h1 class="my-5 font-semibold text-xl">
+    Total Applications: {{ ELEMENT_DATA.length }}
+  </h1>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    (matSortChange)="announceSortChange($event)"
+    class="mat-elevation-z8"
+  >
+    <!-- Job Column -->
+    <ng-container matColumnDef="Job">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="centerth">
+        Job
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.Job }}</td>
+    </ng-container>
+
+    <!-- Full Name Column -->
+    <ng-container matColumnDef="fullName">
+      <!-- Changed to fullName -->
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.fullName }}</td>
+      <!-- Changed to fullName -->
+    </ng-container>
+
+    <!-- Score Column -->
+    <ng-container matColumnDef="score">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>AI Score</th>
+      <td mat-cell *matCellDef="let element">{{ element.score }} %</td>
+    </ng-container>
+
+    <!-- Created At Column -->
+    <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Applied Date</th>
+      <td mat-cell *matCellDef="let element">{{ element.created_at }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="link">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          [routerLink]="element.link"
+          class="px-3 py-2 bg-[#e9ebfd] border border-[#4640de] text-[#4640de] font-semibold rounded"
+        >
+          View Application
+        </button>
+      </td>
+    </ng-container>
+
+    <tr
+      class="mat-header-row"
+      mat-header-row
+      *matHeaderRowDef="displayedColumns"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns; let i = index"
+      [ngClass]="{ 'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0 }"
+    ></tr>
+  </table>
+  <mat-paginator
+    class="pagination"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>

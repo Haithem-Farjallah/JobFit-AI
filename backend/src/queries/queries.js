@@ -55,9 +55,10 @@ export const validateJobIdQuery = `SELECT title,description,experience_level FRO
 
 export const existingemailQuery =
   "select exists(select 1 from applications where email=$1 and job_id=$2)";
-export const getApplicationsQuery = (limit, offset, job_id) => {
-  return {
-    query: `SELECT * FROM applications WHERE job_id = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3`,
-    values: [job_id, limit, offset],
-  };
-};
+export const getApplicationsQuery = `SELECT J.title, A.id, A.firstname, A.lastname, A.created_at, R.score
+FROM applications AS A
+JOIN jobs AS J ON A.job_id = J.job_id
+JOIN results AS R ON A.id = R.application_id
+WHERE J.posted_by = $1  
+ORDER BY A.created_at DESC
+LIMIT $2 OFFSET $3`;

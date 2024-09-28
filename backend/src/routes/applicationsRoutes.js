@@ -1,6 +1,11 @@
 import express from "express";
-import applicaionsController from "../controllers/applications.js";
+import applicaionsController from "../controllers/applicationsController.js";
+import { verifyToken } from "../middlewares/verifyToken.js";
 const router = express.Router();
 
-router.get("/:job_id", applicaionsController.getApplicationsController);
+router.get(
+  "/:id",
+  verifyToken,
+  applicaionsController.getApplicationsController
+);
 export default router;

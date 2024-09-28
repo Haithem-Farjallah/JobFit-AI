@@ -102,7 +102,6 @@ const deleteJobController = async (req, res) => {
   }
 };
 const applyJobController = async (req, res) => {
-  console.log(req.body);
   try {
     if (!req.file) {
       return res.status(400).json({ message: "Resume file is required." });
@@ -120,7 +119,8 @@ const applyJobController = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
     const existingemail = await pool.query(existingemailQuery, [email, job_id]);
-    if (existingemail.rows[0]) {
+    console.log(existingemail.rows[0].exists);
+    if (existingemail.rows[0].exists) {
       deleteFile(req.file.filename);
       return res
         .status(403)

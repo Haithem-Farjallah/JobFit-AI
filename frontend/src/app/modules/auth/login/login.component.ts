@@ -31,7 +31,7 @@ export class LoginComponent {
             );
           } else {
             this.authService.setToken(data.token);
-            this.router.navigate(['/']);
+            this.router.navigate(['/applications']);
           }
         },
         error: (error) => {

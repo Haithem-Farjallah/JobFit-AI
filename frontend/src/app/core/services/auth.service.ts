@@ -19,12 +19,8 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/auth/forgot-password`, data);
   }
 
-  getToken() {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('access_token');
-    }
-    // Optionally handle SSR cases
-    return null; // Or a different fallback
+  getToken(): string | null {
+    return localStorage.getItem('access_token');
   }
 
   setToken(token: string) {
