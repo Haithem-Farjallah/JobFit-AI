@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './modules/auth/login/login.component';
 import { LayoutsComponent } from './layouts/layouts.component';
 import { authGuard } from '@core/guards/auth.guard';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
-
 const routes: Routes = [
   {
     path: '',
     component: LayoutsComponent,
-    canActivate: [authGuard],
     children: [
       {
         path: 'jobs',
@@ -18,6 +15,7 @@ const routes: Routes = [
       },
       {
         path: 'users',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./modules/user/user.module').then((m) => m.UserModule),
       },

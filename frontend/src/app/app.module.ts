@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { LayoutsComponent } from './layouts/layouts.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
-import { AuthModule } from './modules/auth/auth.module';
 import {
   provideHttpClient,
   withFetch,
@@ -18,9 +17,8 @@ import {
 import { httpInterceptor } from '@core/interceptors/http.interceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MaterialModule } from './modules/material/material.module';
-import { UserModule } from './modules/user/user.module';
-import { UserRoutingModule } from './modules/user/user-routing.module';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+
 @NgModule({
   declarations: [
     AppComponent,

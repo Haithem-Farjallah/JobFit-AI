@@ -1,1 +1,31 @@
-<p>navbar works!</p>
+<header class="w-full bg-[#f1f2f4] py-4 mb-8 shadow-md">
+  <div class="max-w-6xl mx-auto flex justify-between items-center">
+    <div class="flex items-center gap-8">
+      <nav class="flex items-center gap-6 text-gray-600">
+        <ng-container *ngFor="let item of navItems">
+          <a
+            [routerLink]="item.link"
+            routerLinkActive="isActive"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="text-lg font-semibold"
+            >{{ item.label }}</a
+          >
+        </ng-container>
+      </nav>
+    </div>
+    <div class="flex gap-5">
+      <buttaon
+        routerLink="/auth/register"
+        class="px-4 py-2 bg-[#0a65cc] text-white rounded-lg cursor-pointer"
+      >
+        SignUp
+      </buttaon>
+      <button
+        routerLink="/auth/login"
+        class="px-4 py-2 border border-[#0a65cc] bg-transparent text-[#0a65cc] rounded-lg"
+      >
+        Login
+      </button>
+    </div>
+  </div>
+</header>
