@@ -2,6 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment.development';
+import { jwtDecode } from 'jwt-decode';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -37,6 +38,17 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/auth/verifyJwt`, {
       observe: 'response',
     });
+  }
+
+  getId(): number | null {
+    const token = this.getToken();
+    if (token) {
+      const decoded = jwtDecode<{ id: number; iat: number; exp: number }>(
+        token
+      );
+      return decoded.id;
+    }
+    return null;
   }
 
   activateAccount(token: string) {

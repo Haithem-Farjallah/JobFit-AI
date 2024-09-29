@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Job, JobDetails } from 'app/models/job.model';
+import { Job, JobDetails, RhJobs } from 'app/models/job.model';
 import { environment } from 'environments/environment.development';
 import { Observable } from 'rxjs';
 
@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class JobService {
   private apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) {}
+
   getCandidatJobs(): Observable<{ jobs: Job[] }> {
     return this.http.get<{ jobs: Job[] }>(`${this.apiUrl}/jobs`);
   }
@@ -18,5 +19,14 @@ export class JobService {
   }
   applyJob(form: any, id: number) {
     return this.http.post(`${this.apiUrl}/jobs/${id}/applications`, form);
+  }
+
+  getRhJobs(id: number): Observable<{ jobs: RhJobs[] }> {
+    return this.http.get<{ jobs: RhJobs[] }>(
+      `${this.apiUrl}/jobs/rh-jobs/${id}`
+    );
+  }
+  postJob(form: any) {
+    return this.http.post(`${this.apiUrl}/jobs`, form);
   }
 }

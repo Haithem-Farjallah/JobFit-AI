@@ -1,0 +1,43 @@
+/* Customize the Quill editor area */
+.ql-editor {
+  background-color: #f8f9fa; /* Light background */
+  padding: 10px; /* Padding around text */
+  border-radius: 8px; /* Rounded corners */
+  font-size: 16px; /* Adjust font size */
+  color: #333; /* Text color */
+  font-family: Arial, sans-serif; /* Custom font */
+}
+
+/* Customize toolbar button styles */
+.ql-toolbar button {
+  background-color: #ffffff; /* White buttons */
+  border: 1px solid #ddd; /* Border around buttons */
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.ql-toolbar button:hover {
+  background-color: #f1f1f1; /* Light gray on hover */
+}
+
+/* Customize link color */
+.ql-editor a {
+  color: #3498db; /* Custom link color */
+  text-decoration: underline;
+}
+
+/* Customize header styles */
+.ql-editor h1 {
+  font-size: 2rem;
+  color: #2c3e50; /* Dark header color */
+}
+
+.ql-editor h2 {
+  font-size: 1.5rem;
+  color: #34495e;
+}
+
+/* Set a custom height for the Quill editor */
+.custom-quill {
+  height: 300px;
+}

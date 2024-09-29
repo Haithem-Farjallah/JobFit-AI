@@ -15,7 +15,7 @@ export class RhNavbarComponent {
     },
     {
       label: 'Post a job',
-      link: '/home',
+      link: '/post-job',
       image: '/postJob.png',
     },
     {

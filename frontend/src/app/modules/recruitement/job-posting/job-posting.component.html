@@ -1,0 +1,112 @@
+<div class="max-w-6xl mx-auto p-8 bg-white rounded-lg">
+  <h1 class="text-3xl font-semibold mb-6">Post a Job</h1>
+
+  <form [formGroup]="postJobForm" (ngSubmit)="onSubmit()">
+    <!-- Job Details Section -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- Job Title -->
+      <div class="col-span-2 flex flex-col gap-2 mb-4">
+        <label for="title" class="text-gray-700">Job Title</label>
+        <input
+          formControlName="title"
+          type="text"
+          id="title"
+          name="title"
+          placeholder="Add job title, role, vacancies etc."
+          class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+        />
+      </div>
+
+      <!-- Salary Section -->
+      <div class="col-span-2 sm:col-span-1 flex flex-col">
+        <label class="text-gray-700">Minimum Salary</label>
+        <input
+          formControlName="min_salary"
+          type="text"
+          placeholder="Minimum salary..."
+          class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+        />
+      </div>
+      <div class="col-span-2 sm:col-span-1 flex flex-col">
+        <label class="text-gray-700">Maximum Salary</label>
+        <input
+          formControlName="max_salary"
+          type="text"
+          placeholder="Maximum salary..."
+          class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+        />
+      </div>
+
+      <!-- Experience Level and Work Type -->
+      <div class="col-span-2 sm:col-span-1">
+        <label class="text-gray-700">Experience Level</label>
+        <select
+          formControlName="experience_level"
+          class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+        >
+          <option value="" selected disabled>Experience</option>
+          <option value="Entry">Entry (0-2 years)</option>
+          <option value="Mid">Mid (2-5 years)</option>
+          <option value="Senior">Senior (+5 years)</option>
+        </select>
+      </div>
+      <div class="col-span-2 sm:col-span-1">
+        <label class="text-gray-700">Work Type</label>
+        <select
+          formControlName="work_type"
+          class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+        >
+          <option value="" disabled selected>Work Type</option>
+          <option value="remote">Remote</option>
+          <option value="on site">On site</option>
+          <option value="hybrid">Hybrid</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Expiration Date Section -->
+    <div class="col-span-2 my-4">
+      <h2 class="text-xl font-semibold mb-2">Expiration Date</h2>
+      <mat-form-field appearance="outline" class="w-full">
+        <input
+          placeholder="DD/MM/YYYY"
+          matInput
+          readonly
+          [matDatepicker]="picker"
+          [min]="minDate"
+          formControlName="expiration_date"
+          class="custom-date-input"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <!-- Job Description -->
+    <div class="my-6">
+      <label
+        for="responsibilities"
+        class="text-lg font-medium mb-2 text-gray-700"
+        >Job Description</label
+      >
+      <quill-editor
+        class="w-full border border-gray-300 rounded-lg"
+        formControlName="description"
+        [styles]="{ height: '200px' }"
+        [modules]="editorConfig"
+        placeholder="Compose your text..."
+      ></quill-editor>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="w-full sm:w-1/6 bg-indigo-600 disabled:opacity-60 disabled:cursor-not-allowed text-white p-2 rounded-lg shadow hover:bg-indigo-700 transition duration-300"
+    >
+      Post Job
+    </button>
+  </form>
+</div>

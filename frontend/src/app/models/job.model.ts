@@ -17,3 +17,13 @@ export interface JobDetails extends Job {
   email: string;
   phone_number: string;
 }
+
+export interface RhJobs {
+  job_id: number;
+  title: string;
+  experience_level: string;
+  work_type: string;
+  expiration_date: string;
+  created_at: Date;
+  application_count: number;
+}

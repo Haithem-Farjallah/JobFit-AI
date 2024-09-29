@@ -20,7 +20,6 @@ import { MaterialModule } from './modules/material/material.module';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { RhNavbarComponent } from './shared/components/rh-navbar/rh-navbar.component';
 import { RhLayoutComponent } from './layouts/rh-layout/rh-layout.component';
-
 @NgModule({
   declarations: [
     AppComponent,

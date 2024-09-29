@@ -1,0 +1,60 @@
+<div class="container mx-auto px-4 py-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-xl font-semibold">Job Listing</h1>
+  </div>
+
+  <div class="bg-white rounded-lg p-4">
+    <div class="overflow-x-auto">
+      <table class="table-auto w-full">
+        <thead>
+          <tr class="text-gray-600 h-16 text-center">
+            <th class="px-4 py-2 border">Job Role</th>
+            <th class="px-4 py-2 border">work type</th>
+            <th class="px-4 py-2 border">Date Posted</th>
+            <th class="px-4 py-2 border">Due Date</th>
+            <th class="px-4 py-2 border">Experience level</th>
+            <th class="px-4 py-2 border">Applicants</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let job of jobList; let i = index"
+            class="text-gray-700 h-14 text-center"
+            [ngClass]="i % 2 === 0 ? 'bg-[#f8f8fd]' : ''"
+          >
+            <td class="border px-4 py-2">{{ job.title }}</td>
+            <td class="border px-4 py-2">
+              <span
+                [ngClass]="
+                  job.work_type === 'on site'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
+                "
+                class="px-2 py-1 rounded-full text-xs font-semibold"
+              >
+                {{ job.work_type }}
+              </span>
+            </td>
+            <td class="border px-4 py-2">{{ formatDate(job.created_at) }}</td>
+            <td class="border px-4 py-2">
+              {{ formatDate(job.expiration_date) }}
+            </td>
+            <td class="border px-4 py-2">
+              <span
+                [ngClass]="
+                  job.experience_level === 'Senior'
+                    ? 'bg-blue-100 text-blue-800'
+                    : 'bg-yellow-100 text-yellow-800'
+                "
+                class="px-2 py-1 rounded-full text-xs font-semibold"
+              >
+                {{ job.experience_level }}
+              </span>
+            </td>
+            <td class="border px-4 py-2">{{ job.application_count }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

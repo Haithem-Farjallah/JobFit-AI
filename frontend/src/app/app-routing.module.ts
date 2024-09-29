@@ -38,6 +38,13 @@ const routes: Routes = [
             (m) => m.ApplicationsModule
           ),
       },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/recruitement/recruitement.module').then(
+            (m) => m.RecruitementModule
+          ),
+      },
     ],
   },
   {
