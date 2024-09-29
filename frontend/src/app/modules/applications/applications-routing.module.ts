@@ -5,11 +5,11 @@ import { ApplicationDetailsComponent } from './application-details/application-d
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'applications',
     component: ApplicationListComponent,
   },
   {
-    path: ':id',
+    path: 'applications/:id',
     component: ApplicationDetailsComponent,
   },
 ];

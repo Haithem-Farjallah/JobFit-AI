@@ -1,12 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'environments/environment.development';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   private apiUrl = environment.apiUrl;
   login(data: any) {
@@ -28,9 +30,13 @@ export class AuthService {
   }
   logout() {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('currentTab');
+    this.router.navigate(['/auth/login']);
   }
-  isAuthenticated() {
-    return !!this.getToken();
+  isAuthenticated(): Observable<HttpResponse<any>> {
+    return this.http.get(`${this.apiUrl}/auth/verifyJwt`, {
+      observe: 'response',
+    });
   }
 
   activateAccount(token: string) {

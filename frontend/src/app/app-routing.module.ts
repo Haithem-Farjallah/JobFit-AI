@@ -4,6 +4,7 @@ import { LayoutsComponent } from './layouts/candidatLayout/layouts.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { RhLayoutComponent } from './layouts/rh-layout/rh-layout.component';
 import { authGuard } from '@core/guards/auth.guard';
+import { candidatGuard } from '@core/guards/candidat.guard';
 const routes: Routes = [
   {
     path: '',
@@ -14,6 +15,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutsComponent,
+    canActivate: [candidatGuard],
     children: [
       {
         //accessible by candidats
@@ -30,7 +32,7 @@ const routes: Routes = [
     children: [
       {
         //for rh only
-        path: 'applications',
+        path: '',
         loadChildren: () =>
           import('./modules/applications/applications.module').then(
             (m) => m.ApplicationsModule
@@ -42,6 +44,10 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
 

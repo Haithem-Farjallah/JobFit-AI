@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-rh-navbar',
@@ -28,4 +29,8 @@ export class RhNavbarComponent {
       image: '/applications.png',
     },
   ];
+  constructor(private authService: AuthService) {}
+  logout() {
+    this.authService.logout();
+  }
 }

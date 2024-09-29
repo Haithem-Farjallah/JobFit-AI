@@ -1,1 +1,131 @@
-<p>application-details works!</p>
+<div class="flex items-center gap-4 mb-4">
+  <img
+    src="/leftarrow.png"
+    alt="arrow"
+    class="h-7 cursor-pointer"
+    routerLink="/applications"
+  />
+  <h1 class="font-semibold text-lg">Applicant Details</h1>
+</div>
+
+<div
+  class="max-w-5xl mx-auto bg-white border border-gray-300 shadow-xl rounded-lg"
+>
+  <!-- Tabs Section -->
+  <div class="flex gap-1 border-b border-gray-200 h-[9vh]">
+    <ng-container *ngFor="let label of lables; let i = index">
+      <button
+        class="w-1/3"
+        (click)="changeTab(i)"
+        [ngClass]="{
+          diffrentTab: currentTab !== i,
+          currentTab: currentTab === i
+        }"
+      >
+        {{ label }}
+      </button>
+    </ng-container>
+  </div>
+
+  <!-- Personal Info Section -->
+  <ng-container *ngIf="applicationDetails">
+    <ng-container *ngIf="currentTab === 0">
+      <div class="p-6">
+        <h2 class="text-lg font-semibold text-[#25324B] mb-4">Personal Info</h2>
+        <div class="grid grid-cols-2 gap-6">
+          <div>
+            <label class="text-[#7C8493] text-sm">First Name</label>
+            <p class="font-medium text-gray-800">
+              {{ applicationDetails.firstname }}
+            </p>
+          </div>
+
+          <div>
+            <label class="text-[#7C8493] text-sm">Last Name</label>
+            <p class="font-medium text-gray-800">
+              {{ applicationDetails.lastname }}
+            </p>
+          </div>
+
+          <div>
+            <label class="text-[#7C8493] text-sm">Email</label>
+            <p class="font-medium text-gray-800">
+              {{ applicationDetails.email }}
+            </p>
+          </div>
+
+          <div>
+            <label class="text-[#7C8493] text-sm">Phone Number</label>
+            <p class="font-medium text-gray-800">
+              {{ applicationDetails.phone_number }}
+            </p>
+          </div>
+
+          <div class="col-span-2">
+            <label class="text-[#7C8493] text-sm">LinkedIn Profile</label>
+            <p class="font-medium text-gray-800">
+              {{ applicationDetails.linkedin_url || "not mentioned" }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Professional Info Section -->
+      <div class="p-6 border-t-2 border-gray-200">
+        <h2 class="text-lg font-semibold text-gray-700 mb-4">
+          Professional Info
+        </h2>
+
+        <div>
+          <p class="font-medium text-gray-800 leading-relaxed">
+            {{ applicationDetails.candidat_note }}
+          </p>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Resume Section -->
+    <ng-container *ngIf="currentTab === 1">
+      <object
+        [data]="getPdfUrl() | safe"
+        type="application/pdf"
+        class="w-full h-[80vh]"
+      ></object>
+    </ng-container>
+
+    <!-- AI Results Section (Tab 2) -->
+    <ng-container *ngIf="currentTab === 2">
+      <div class="p-6">
+        <!-- Score Section -->
+        <div class="mb-6">
+          <h1 class="text-2xl font-semibold text-[#25324B]">
+            Score: {{ applicationDetails.score }} %
+          </h1>
+        </div>
+
+        <!-- Matched Keywords Section -->
+        <div class="mb-6">
+          <h1 class="text-lg font-semibold mb-8 text-[#25324B]">
+            Matched Keywords:
+          </h1>
+          <div class="flex flex-wrap gap-2 mt-2">
+            <span
+              *ngFor="let keyword of applicationDetails.matched_keywords"
+              class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium"
+            >
+              {{ keyword }}
+            </span>
+          </div>
+        </div>
+
+        <!-- AI Summary Section -->
+        <div class="mb-6">
+          <h1 class="text-lg font-semibold text-[#25324B]">AI Summary:</h1>
+          <p class="mt-2 text-gray-700 leading-relaxed">
+            {{ applicationDetails.summary }}
+          </p>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

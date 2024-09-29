@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 * {
-  font-family: "Epilogue", sans-serif;
+  font-family: "Epilogue", Arial, Helvetica, sans-serif;
   ::-webkit-scrollbar {
     width: 5px; /* Width of the scrollbar */
   }

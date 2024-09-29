@@ -9,7 +9,7 @@ import { AuthService } from '@core/services/auth.service';
 import { catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-export const authGuard: CanActivateFn = (
+export const candidatGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
@@ -18,14 +18,13 @@ export const authGuard: CanActivateFn = (
 
   const token = auth.getToken();
   if (!token) {
-    console.log('No token found');
-    router.navigate(['/auth/login']);
-    return false;
+    return true;
   }
   return auth.isAuthenticated().pipe(
     map((response) => {
       if (response.status === 200) {
-        return true;
+        router.navigate(['/applications']);
+        return false;
       } else {
         auth.logout();
         router.navigate(['/auth/login']);
