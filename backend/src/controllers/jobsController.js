@@ -4,6 +4,7 @@ import {
   deleteQuery,
   existingemailQuery,
   getJobsQuery,
+  getJobsRh,
   getSingleJobQuery,
   postJobQuery,
   updateJobQuery,
@@ -137,6 +138,10 @@ const applyJobController = async (req, res) => {
       candidat_note,
     ];
     const application = await pool.query(applyJobQuery, values);
+    await pool.query(
+      "UPDATE jobs SET application_count = application_count + 1 WHERE job_id = $1",
+      [job_id]
+    );
     const application_id = application.rows[0].id;
     res.status(201).json({ message: "Application Submitted" });
     //extract data from candidat resume
@@ -161,6 +166,17 @@ const applyJobController = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+const getJobsByRhIdController = async (req, res) => {
+  try {
+    const rh_id = req.params.rhId;
+    const values = [rh_id];
+    const jobs = await pool.query(getJobsRh, values);
+    res.status(200).json({ jobs: jobs.rows });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 
 export default {
   getJobsController,
@@ -169,4 +185,5 @@ export default {
   updateJobController,
   deleteJobController,
   applyJobController,
+  getJobsByRhIdController,
 };

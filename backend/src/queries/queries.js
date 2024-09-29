@@ -51,6 +51,8 @@ export const deleteQuery = `DELETE FROM jobs WHERE job_id = $1`;
 export const applyJobQuery = `INSERT INTO applications (job_id,firstname,lastname,email,phone_number,resume_url,candidat_note) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`;
 export const validateJobIdQuery = `SELECT title,description,experience_level FROM jobs WHERE job_id = $1`;
 
+export const getJobsRh =
+  "select job_id,title,experience_level,work_type,application_count,created_at,expiration_date from jobs where posted_by=$1";
 // ******************************Applications queries************************** */
 
 export const existingemailQuery =
@@ -60,5 +62,8 @@ FROM applications AS A
 JOIN jobs AS J ON A.job_id = J.job_id
 JOIN results AS R ON A.id = R.application_id
 WHERE J.posted_by = $1  
-ORDER BY A.created_at DESC
+ORDER BY R.score DESC
 LIMIT $2 OFFSET $3`;
+
+export const getSingleApplicationQuery =
+  "SELECT A.firstname ,A.lastname,A.email,A.phone_number,A.candidat_note,A.resume_url,A.linkedin_url,A.job_id,R.score,R.matched_keywords,R.summary from applications as A JOIN results as R ON A.id = R.application_id WHERE A.id = $1";

@@ -8,4 +8,9 @@ router.get(
   verifyToken,
   applicaionsController.getApplicationsController
 );
+router.get(
+  "/single/:id",
+  verifyToken,
+  applicaionsController.getSingleApplicationController
+);
 export default router;

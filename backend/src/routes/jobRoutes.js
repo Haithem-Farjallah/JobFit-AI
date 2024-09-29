@@ -10,7 +10,11 @@ router.get("/:id", jobController.getSingleJobController);
 router.post("/", verifyToken, jobController.postjobController);
 router.patch("/:id", verifyToken, jobController.updateJobController);
 router.delete("/:id", verifyToken, jobController.deleteJobController);
-
+router.get(
+  "/rh-jobs/:rhId",
+  verifyToken,
+  jobController.getJobsByRhIdController
+);
 router.post(
   "/:id/applications",
   limiter,

@@ -1,5 +1,8 @@
 import pool from "../config/DB.js";
-import { getApplicationsQuery } from "../queries/queries.js";
+import {
+  getApplicationsQuery,
+  getSingleApplicationQuery,
+} from "../queries/queries.js";
 const getApplicationsController = async (req, res) => {
   try {
     const limit = req.query.limit || 10;
@@ -14,6 +17,17 @@ const getApplicationsController = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+const getSingleApplicationController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const application = await pool.query(getSingleApplicationQuery, [id]);
+    res.status(200).json(application.rows[0]);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 export default {
   getApplicationsController,
+  getSingleApplicationController,
 };
