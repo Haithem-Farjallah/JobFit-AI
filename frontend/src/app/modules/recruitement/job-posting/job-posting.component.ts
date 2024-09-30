@@ -15,10 +15,14 @@ export class JobPostingComponent {
   ngOnInit() {
     this.postJobForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
-      min_salary: new FormControl('', [Validators.required, Validators.min(0)]),
-      max_salary: new FormControl('', [
+      min_salary: new FormControl(0, [
         Validators.required,
-        Validators.min(this.postJobForm?.get('min_salary')?.value || 0),
+        Validators.min(0),
+        this.controlSalary.bind(this),
+      ]),
+      max_salary: new FormControl(0, [
+        Validators.required,
+        this.controlSalary.bind(this),
       ]),
       experience_level: new FormControl('', [Validators.required]),
       work_type: new FormControl('', [Validators.required]),
@@ -26,6 +30,16 @@ export class JobPostingComponent {
       description: new FormControl('', [Validators.required]),
     });
   }
+
+  controlSalary() {
+    const minSalary = this.postJobForm?.get('min_salary')?.value;
+    const maxSalary = this.postJobForm?.get('max_salary')?.value;
+    if (minSalary > maxSalary && maxSalary !== 0 && minSalary !== 0) {
+      return { invalidSalary: true };
+    }
+    return null;
+  }
+
   // Define the toolbar configuration
   editorConfig = {
     toolbar: [

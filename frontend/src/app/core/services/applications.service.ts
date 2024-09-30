@@ -38,4 +38,9 @@ export class ApplicationsService {
       `${this.apiUrl}/applications/single/${id}`
     );
   }
+
+  getApplicationsByJobId(id: number) {
+    console.log(id);
+    return this.http.get(`${this.apiUrl}/applications/job/${id}`);
+  }
 }

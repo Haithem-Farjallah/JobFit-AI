@@ -1,0 +1,43 @@
+<!-- applicants.component.html
+<div class="overflow-x-auto">
+  <table class="min-w-full bg-white">
+    <thead>
+      <tr class="w-full bg-gray-50">
+        <th class="text-left py-4 px-6"></th>
+        <th class="text-left py-4 px-6">Score</th>
+        <th class="text-left py-4 px-6">Hiring Stage</th>
+        <th class="text-left py-4 px-6">Applied Date</th>
+        <th class="text-left py-4 px-6">Action</th>
+        <th class="py-4 px-6"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let applicant of applicants" class="border-b">
+        <td class="py-4 px-6 flex items-center space-x-2">
+          <i class="fas fa-star text-yellow-400"></i>
+          <span>{{ applicant.score }}</span>
+        </td>
+        <td class="py-4 px-6">
+          <span
+            [ngClass]="getStatusClass(applicant.status)"
+            class="px-2 py-1 rounded-full text-sm font-medium"
+          >
+            {{ applicant.status }}
+          </span>
+        </td>
+        <td class="py-4 px-6">{{ applicant.date }}</td>
+        <td class="py-4 px-6">
+          <button
+            class="bg-white border text-blue-500 hover:bg-blue-50 px-4 py-2 rounded"
+          >
+            See Application
+          </button>
+        </td>
+        <td class="py-4 px-6 text-right">
+          <i class="fas fa-ellipsis-h text-gray-500"></i>
+    
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->

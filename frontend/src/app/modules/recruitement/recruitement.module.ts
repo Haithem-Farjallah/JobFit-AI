@@ -8,12 +8,18 @@ import { JobApplicationsComponent } from './job-applications/job-applications.co
 import { QuillModule } from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
+import { SingleJobComponent } from './single-job/single-job.component';
+import { ApplicantsComponent } from './single-job/applicants/applicants.component';
+import { JobDetailsComponent } from './single-job/job-details/job-details.component';
 
 @NgModule({
   declarations: [
     JobPostingComponent,
     MyJobsComponent,
     JobApplicationsComponent,
+    SingleJobComponent,
+    ApplicantsComponent,
+    JobDetailsComponent,
   ],
   imports: [
     CommonModule,

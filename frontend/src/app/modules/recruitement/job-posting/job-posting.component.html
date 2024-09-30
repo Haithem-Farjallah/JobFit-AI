@@ -5,7 +5,7 @@
     <!-- Job Details Section -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <!-- Job Title -->
-      <div class="col-span-2 flex flex-col gap-2 mb-4">
+      <div class="col-span-2 flex flex-col gap-2 mb-2">
         <label for="title" class="text-gray-700">Job Title</label>
         <input
           formControlName="title"
@@ -15,6 +15,15 @@
           placeholder="Add job title, role, vacancies etc."
           class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
         />
+        <p
+          *ngIf="
+            !postJobForm.get('title')?.valid &&
+            postJobForm.get('title')?.touched
+          "
+          class="text-red-500 text-sm font-medium mt-1"
+        >
+          Job title is required
+        </p>
       </div>
 
       <!-- Salary Section -->
@@ -26,6 +35,15 @@
           placeholder="Minimum salary..."
           class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
         />
+        <p
+          *ngIf="
+          postJobForm.get('min_salary')?.errors?.['invalidSalary'] &&
+          postJobForm.get('min_salary')?.touched
+        "
+          class="text-red-500 text-sm font-medium mt-1"
+        >
+          Minimum salary must be less than maximum salary
+        </p>
       </div>
       <div class="col-span-2 sm:col-span-1 flex flex-col">
         <label class="text-gray-700">Maximum Salary</label>
@@ -35,6 +53,15 @@
           placeholder="Maximum salary..."
           class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
         />
+        <p
+          *ngIf="
+            postJobForm.get('max_salary')?.errors?.['invalidSalary'] &&
+            postJobForm.get('max_salary')?.touched
+          "
+          class="text-red-500 text-sm font-medium mt-1"
+        >
+          Maximum salary must be greater than minimum salary
+        </p>
       </div>
 
       <!-- Experience Level and Work Type -->
@@ -49,6 +76,15 @@
           <option value="Mid">Mid (2-5 years)</option>
           <option value="Senior">Senior (+5 years)</option>
         </select>
+        <p
+          *ngIf="
+            postJobForm.get('experience_level')?.invalid &&
+            postJobForm.get('experience_level')?.touched
+          "
+          class="text-red-500 text-sm font-medium mt-1"
+        >
+          Experience level is required
+        </p>
       </div>
       <div class="col-span-2 sm:col-span-1">
         <label class="text-gray-700">Work Type</label>
@@ -61,6 +97,15 @@
           <option value="on site">On site</option>
           <option value="hybrid">Hybrid</option>
         </select>
+        <p
+          *ngIf="
+            postJobForm.get('work_type')?.invalid &&
+            postJobForm.get('work_type')?.touched
+          "
+          class="text-red-500 text-sm font-medium mt-1"
+        >
+          Work type is required
+        </p>
       </div>
     </div>
 
@@ -83,6 +128,15 @@
         ></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
+      <p
+        *ngIf="
+          postJobForm.get('expiration_date')?.invalid &&
+          postJobForm.get('expiration_date')?.touched
+        "
+        class="text-red-500 text-sm font-medium mt-1"
+      >
+        Expiration date is required
+      </p>
     </div>
 
     <!-- Job Description -->
@@ -99,10 +153,20 @@
         [modules]="editorConfig"
         placeholder="Compose your text..."
       ></quill-editor>
+      <p
+        *ngIf="
+          postJobForm.get('description')?.invalid &&
+          postJobForm.get('description')?.touched
+        "
+        class="text-red-500 text-sm font-medium mt-1"
+      >
+        Job description is required
+      </p>
     </div>
 
     <!-- Submit Button -->
     <button
+      [disabled]="postJobForm.invalid"
       type="submit"
       class="w-full sm:w-1/6 bg-indigo-600 disabled:opacity-60 disabled:cursor-not-allowed text-white p-2 rounded-lg shadow hover:bg-indigo-700 transition duration-300"
     >
