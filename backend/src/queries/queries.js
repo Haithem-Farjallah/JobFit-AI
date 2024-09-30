@@ -67,3 +67,5 @@ LIMIT $2 OFFSET $3`;
 
 export const getSingleApplicationQuery =
   "SELECT A.firstname ,A.lastname,A.email,A.phone_number,A.candidat_note,A.resume_url,A.linkedin_url,A.job_id,R.score,R.matched_keywords,R.summary from applications as A JOIN results as R ON A.id = R.application_id WHERE A.id = $1";
+export const getApplicationsByJobIdQuery =
+  "Select A.id, A.firstname,A.lastname,A.hiring_stage, A.created_at,R.score from applications as A JOIN results as R ON A.id = R.application_id WHERE A.job_id = $1 ORDER BY A.created_at DESC LIMIT $2 OFFSET $3";

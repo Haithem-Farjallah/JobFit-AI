@@ -13,4 +13,9 @@ router.get(
   verifyToken,
   applicaionsController.getSingleApplicationController
 );
+router.get(
+  "/job/:job_id",
+  verifyToken,
+  applicaionsController.getApplicationsByJobIdController
+);
 export default router;
