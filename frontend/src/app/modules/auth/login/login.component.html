@@ -25,7 +25,7 @@
           #email="ngModel"
         />
         <div
-          *ngIf="email.invalid && (email.dirty || email.touched)"
+          *ngIf="email.invalid && email.touched"
           class="text-red-500 text-sm font-medium mt-1"
         >
           <p *ngIf="email.errors?.['required']">Email is required.</p>

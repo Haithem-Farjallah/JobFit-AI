@@ -11,7 +11,6 @@ import { RhJobs } from 'app/models/job.model';
 })
 export class MyJobsComponent {
   jobList: RhJobs[] = [];
-
   constructor(
     private jobService: JobService,
     private router: Router,

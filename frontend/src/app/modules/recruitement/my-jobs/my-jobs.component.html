@@ -24,6 +24,11 @@
           >
             <td
               [routerLink]="['/job-listing', job.job_id]"
+              [queryParams]="{
+                job_title: job.title,
+                work_type: job.work_type,
+                experience_level: job.experience_level
+              }"
               class="border px-4 py-2 cursor-pointer hover:underline"
             >
               {{ job.title }}
