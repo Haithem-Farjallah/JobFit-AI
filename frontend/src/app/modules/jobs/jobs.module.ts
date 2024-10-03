@@ -10,5 +10,6 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [JobDetailsComponent, JobListComponent],
   imports: [CommonModule, JobsRoutingModule, MaterialModule, FormsModule],
+  exports:[JobDetailsComponent]
 })
 export class JobsModule {}

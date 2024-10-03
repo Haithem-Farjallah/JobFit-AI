@@ -20,3 +20,11 @@ export interface applicationDetails {
   score: string;
   summary: string;
 }
+export interface applicantsPerJob {
+  id: number;
+  firstname: string;
+  lastname: string;
+  hiring_stage: string;
+  score: string;
+  created_at: Date;
+}

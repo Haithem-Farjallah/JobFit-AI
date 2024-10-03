@@ -1,10 +1,17 @@
 <div class="min-h-screen flex flex-col">
   <div class="flex justify-between items-center border-b pb-4">
     <div class="flex items-center space-x-4">
-      <img src="/leftarrow.png" alt="left arrow" class="h-8" />
+      <img
+        src="/leftarrow.png"
+        alt="left arrow"
+        class="h-8 cursor-pointer"
+        (click)="goback()"
+      />
       <div>
-        <h2 class="font-bold text-lg">Social Media Assistant</h2>
-        <p class="text-gray-500">Design • Full-Time</p>
+        <h2 class="font-bold text-lg">{{ queryData.job_title }}</h2>
+        <p class="text-gray-500">
+          {{ queryData.experience_level }} • {{ queryData.work_type }}
+        </p>
       </div>
     </div>
 
@@ -16,28 +23,24 @@
       <span class="pt-1"> Post a job</span>
     </button>
   </div>
-
-  <!-- Tab Navigation -->
   <div class="flex gap-5 mt-4 border-b">
     <a
       routerLink="applicants"
       routerLinkActive="isActive"
+      [queryParamsHandling]="'preserve'"
       class="pb-2 text-gray-500 hover:text-[#4640de] px-5"
       >Applicants</a
     >
     <a
       routerLink="details"
       routerLinkActive="isActive"
-      class="pb-2 text-gray-500 hover:text-blue-500 px-5"
+      [queryParamsHandling]="'preserve'"
+      class="pb-2 text-gray-500 hover:text-[#4640de] px-5"
       >Job Details</a
     >
-    <!-- <a routerLink="analytics" class="pb-2 text-gray-500 hover:text-blue-500"
-      >Analytics</a
-    > -->
   </div>
 
-  <!-- Router Outlet for Content -->
-  <div class="flex-1 p-6 bg-gray-100">
+  <div class="flex-1 p-6">
     <router-outlet></router-outlet>
   </div>
 </div>

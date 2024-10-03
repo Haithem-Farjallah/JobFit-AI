@@ -1,4 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { Component, inject, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { ApplicationsService } from '@core/services/applications.service';
 
@@ -68,22 +72,76 @@ export class ApplicantsComponent {
   // ];
   applicants: any;
   jobId!: number;
+  ELEMENT_DATA: {
+    id: number;
+    fullName: string;
+    hiring_stage: string;
+    score: string;
+    created_at: string;
+    link: string;
+  }[] = [];
+  dataSource = new MatTableDataSource<{
+    id: number;
+    fullName: string;
+    hiring_stage: string;
+    score: string;
+    created_at: string;
+    link: string;
+  }>();
   constructor(
     private applicationService: ApplicationsService,
     private route: ActivatedRoute
   ) {
     this.route.parent?.params.subscribe((params) => {
-      console.log(params);
       this.jobId = params['id'];
       this.applicationService.getApplicationsByJobId(this.jobId).subscribe({
         next: (data) => {
-          console.log(data);
+          this.ELEMENT_DATA = data.map((app) => ({
+            id: app.id,
+            fullName: `${app.firstname} ${app.lastname}`,
+            hiring_stage: app.hiring_stage,
+            score: app.score,
+            created_at: new Date(app.created_at).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+            }),
+            link: `/applications/${app.id}`,
+          }));
+          this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         },
         error: (err) => {
           console.log(err);
         },
       });
     });
+  }
+  private _liveAnnouncer = inject(LiveAnnouncer);
+
+  displayedColumns: string[] = [
+    'fullName',
+    'score',
+    'hiring_stage',
+    'created_at',
+    'link',
+  ]; // Ensure these match the matColumnDef
+
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 
   // Class for status badges

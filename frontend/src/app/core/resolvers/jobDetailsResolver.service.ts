@@ -12,7 +12,7 @@ import { JobService } from '@core/services/job.service';
 export class JobDetailsResolver implements Resolve<any> {
   constructor(private jobService: JobService) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const id = route.params['id'];
+    const id = route.params['id'] || route.parent?.params['id'];
     return this.jobService.getJobById(id);
   }
 }

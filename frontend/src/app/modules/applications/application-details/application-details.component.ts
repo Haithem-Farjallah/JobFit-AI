@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApplicationsService } from '@core/services/applications.service';
@@ -17,7 +18,8 @@ export class ApplicationDetailsComponent {
   private pdf_url = environment.pdfUrl;
   constructor(
     private applicationService: ApplicationsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {
     const savedTab = localStorage.getItem('currentTab');
     if (savedTab !== null) {
@@ -48,5 +50,8 @@ export class ApplicationDetailsComponent {
   changeTab(index: number) {
     this.currentTab = index;
     localStorage.setItem('currentTab', index.toString());
+  }
+  goback() {
+    this.location.back();
   }
 }

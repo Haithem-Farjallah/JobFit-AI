@@ -3,7 +3,11 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.development';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from './auth.service';
-import { Application, applicationDetails } from 'app/models/applications.model';
+import {
+  applicantsPerJob,
+  Application,
+  applicationDetails,
+} from 'app/models/applications.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -39,8 +43,9 @@ export class ApplicationsService {
     );
   }
 
-  getApplicationsByJobId(id: number) {
-    console.log(id);
-    return this.http.get(`${this.apiUrl}/applications/job/${id}`);
+  getApplicationsByJobId(id: number): Observable<applicantsPerJob[]> {
+    return this.http.get<applicantsPerJob[]>(
+      `${this.apiUrl}/applications/job/${id}`
+    );
   }
 }

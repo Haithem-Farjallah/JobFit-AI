@@ -11,6 +11,8 @@ import { MaterialModule } from '../material/material.module';
 import { SingleJobComponent } from './single-job/single-job.component';
 import { ApplicantsComponent } from './single-job/applicants/applicants.component';
 import { JobDetailsComponent } from './single-job/job-details/job-details.component';
+import { HomeComponent } from './home/home.component';
+import { JobsModule } from '../jobs/jobs.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { JobDetailsComponent } from './single-job/job-details/job-details.compon
     SingleJobComponent,
     ApplicantsComponent,
     JobDetailsComponent,
+    HomeComponent,
   ],
   imports: [
     CommonModule,
