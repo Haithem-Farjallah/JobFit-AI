@@ -62,10 +62,11 @@ FROM applications AS A
 JOIN jobs AS J ON A.job_id = J.job_id
 JOIN results AS R ON A.id = R.application_id
 WHERE J.posted_by = $1  
-ORDER BY R.score DESC
-LIMIT $2 OFFSET $3`;
+ORDER BY R.score DESC`;
 
 export const getSingleApplicationQuery =
-  "SELECT A.firstname ,A.lastname,A.email,A.phone_number,A.candidat_note,A.resume_url,A.linkedin_url,A.job_id,R.score,R.matched_keywords,R.summary from applications as A JOIN results as R ON A.id = R.application_id WHERE A.id = $1";
+  "SELECT A.firstname ,A.lastname,A.email,A.hiring_stage,A.phone_number,A.candidat_note,A.resume_url,A.linkedin_url,A.job_id,R.score,R.matched_keywords,R.summary from applications as A JOIN results as R ON A.id = R.application_id WHERE A.id = $1";
 export const getApplicationsByJobIdQuery =
-  "Select A.id, A.firstname,A.lastname,A.hiring_stage, A.created_at,R.score from applications as A JOIN results as R ON A.id = R.application_id WHERE A.job_id = $1 ORDER BY A.created_at DESC LIMIT $2 OFFSET $3";
+  "Select A.id, A.firstname,A.lastname,A.hiring_stage, A.created_at,R.score from applications as A JOIN results as R ON A.id = R.application_id WHERE A.job_id = $1 ORDER BY A.created_at DESC ";
+export const rejectApplicationQuery =
+  "UPDATE applications SET hiring_stage = 'rejected' WHERE id = $1";

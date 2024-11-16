@@ -6,6 +6,8 @@ const pool = new pg.Pool({
   database: "job_applications_db",
   password: "hello3100",
   port: 5432,
-  connectionTimeoutMillis: 5000, // if a client is idle for 5 seconds, the connection is closed
+});
+pool.on("error", (err) => {
+  console.error("Unexpected error on idle client", err);
 });
 export default pool;

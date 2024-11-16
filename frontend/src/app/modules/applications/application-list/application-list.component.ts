@@ -36,7 +36,7 @@ export class ApplicationListComponent implements AfterViewInit {
       next: (data: Application[]) => {
         this.ELEMENT_DATA = data.map((app) => ({
           Job: app.title,
-          fullName: `${app.firstname} ${app.lastname}`, // Ensure you use fullName here
+          fullName: `${app.firstname} ${app.lastname}`,
           score: app.score,
           created_at: new Date(app.created_at).toLocaleDateString('en-US', {
             month: 'short',

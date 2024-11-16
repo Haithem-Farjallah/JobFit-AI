@@ -1,34 +1,52 @@
-<div class="flex items-center gap-4 mb-4">
-  <img
-    src="/leftarrow.png"
-    alt="arrow"
-    class="h-7 cursor-pointer"
-    (click)="goback()"
-  />
-  <h1 class="font-semibold text-lg">Applicant Details</h1>
-</div>
-
-<div
-  class="max-w-5xl mx-auto bg-white border border-gray-300 shadow-xl rounded-lg"
->
-  <!-- Tabs Section -->
-  <div class="flex gap-1 border-b border-gray-200 h-[9vh]">
-    <ng-container *ngFor="let label of lables; let i = index">
-      <button
-        class="w-1/3"
-        (click)="changeTab(i)"
-        [ngClass]="{
-          diffrentTab: currentTab !== i,
-          currentTab: currentTab === i
-        }"
-      >
-        {{ label }}
-      </button>
-    </ng-container>
+<ng-container *ngIf="applicationDetails">
+  <div class="flex mx-auto max-w-7xl px-2 my-4 justify-between">
+    <div class="flex items-center gap-4">
+      <img
+        src="/leftarrow.png"
+        alt="arrow"
+        class="h-7 cursor-pointer"
+        (click)="goback()"
+      />
+      <h1 class="font-semibold text-lg">Applicant Details</h1>
+    </div>
+    <div [ngSwitch]="applicationDetails.hiring_stage">
+      <div *ngSwitchCase="'pending'" class="flex gap-4">
+        <app-reject-button (click)="handleReject()"></app-reject-button>
+        <app-accept-button [value]="'Interview'"></app-accept-button>
+      </div>
+      <div *ngSwitchCase="'interview'" class="flex gap-4">
+        <app-reject-button (click)="handleReject()"></app-reject-button>
+        <app-accept-button [value]="'Hire'"></app-accept-button>
+      </div>
+      <div *ngSwitchCase="'hired'" class="text-green-600 font-semibold">
+        Candidate Hired
+      </div>
+      <div *ngSwitchCase="'rejected'" class="text-red-600 font-semibold">
+        Candidate Rejected
+      </div>
+    </div>
   </div>
 
-  <!-- Personal Info Section -->
-  <ng-container *ngIf="applicationDetails">
+  <div
+    class="max-w-5xl mx-auto bg-white border border-gray-300 shadow-xl rounded-lg"
+  >
+    <!-- Tabs Section -->
+    <div class="flex gap-1 border-b border-gray-200 h-[9vh]">
+      <ng-container *ngFor="let label of lables; let i = index">
+        <button
+          class="w-1/3"
+          (click)="changeTab(i)"
+          [ngClass]="{
+            diffrentTab: currentTab !== i,
+            currentTab: currentTab === i
+          }"
+        >
+          {{ label }}
+        </button>
+      </ng-container>
+    </div>
+
+    <!-- Personal Info Section -->
     <ng-container *ngIf="currentTab === 0">
       <!-- Personal Info Section -->
       <div class="p-6 bg-white rounded-lg shadow-sm">
@@ -133,5 +151,5 @@
         </div>
       </div>
     </ng-container>
-  </ng-container>
-</div>
+  </div>
+</ng-container>

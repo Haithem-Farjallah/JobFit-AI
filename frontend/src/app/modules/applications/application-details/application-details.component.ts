@@ -16,6 +16,7 @@ export class ApplicationDetailsComponent {
   currentTab = 0;
   loading: boolean = true;
   private pdf_url = environment.pdfUrl;
+  id!: number;
   constructor(
     private applicationService: ApplicationsService,
     private route: ActivatedRoute,
@@ -25,11 +26,11 @@ export class ApplicationDetailsComponent {
     if (savedTab !== null) {
       this.currentTab = +savedTab; // '+' converts string to number
     }
-    let id = 0;
+
     this.route.params.subscribe((params) => {
-      id = params['id'];
+      this.id = params['id'];
     });
-    this.applicationService.getSingleApplication(id)?.subscribe({
+    this.applicationService.getSingleApplication(this.id)?.subscribe({
       next: (data) => {
         this.applicationDetails = data;
         this.setPdfUrl(data.resume_url);
@@ -53,5 +54,16 @@ export class ApplicationDetailsComponent {
   }
   goback() {
     this.location.back();
+  }
+  handleReject() {
+    this.applicationService.rejectApplication(this.id).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.goback();
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 }

@@ -12,7 +12,7 @@ import { SingleJobComponent } from './single-job/single-job.component';
 import { ApplicantsComponent } from './single-job/applicants/applicants.component';
 import { JobDetailsComponent } from './single-job/job-details/job-details.component';
 import { HomeComponent } from './home/home.component';
-import { JobsModule } from '../jobs/jobs.module';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +23,7 @@ import { JobsModule } from '../jobs/jobs.module';
     ApplicantsComponent,
     JobDetailsComponent,
     HomeComponent,
+    CalendarComponent,
   ],
   imports: [
     CommonModule,

@@ -19,6 +19,7 @@ export interface applicationDetails {
   resume_url: string;
   score: string;
   summary: string;
+  hiring_stage: string;
 }
 export interface applicantsPerJob {
   id: number;
