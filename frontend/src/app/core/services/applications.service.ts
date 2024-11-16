@@ -48,4 +48,8 @@ export class ApplicationsService {
       `${this.apiUrl}/applications/job/${id}`
     );
   }
+
+  rejectApplication(id: number): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/applications/reject/${id}`, {});
+  }
 }

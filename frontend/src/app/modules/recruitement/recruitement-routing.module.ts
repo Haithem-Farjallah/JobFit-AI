@@ -8,6 +8,7 @@ import { ApplicantsComponent } from './single-job/applicants/applicants.componen
 import { JobDetailsComponent } from './single-job/job-details/job-details.component';
 import { HomeComponent } from './home/home.component';
 import { JobDetailsResolver } from '@core/resolvers/jobDetailsResolver.service';
+import { CalendarComponent } from './calendar/calendar.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path: 'post-job',
     component: JobPostingComponent,
+  },
+  {
+    path: 'schedule-interview',
+    component: CalendarComponent,
   },
 ];
 
