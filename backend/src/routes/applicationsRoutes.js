@@ -18,4 +18,9 @@ router.get(
   verifyToken,
   applicaionsController.getApplicationsByJobIdController
 );
+router.patch(
+  "/reject/:id",
+  verifyToken,
+  applicaionsController.rejectApplicationController
+);
 export default router;
