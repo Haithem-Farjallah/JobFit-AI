@@ -111,6 +111,7 @@ export class JobDetailsComponent implements OnInit {
     formData.append('email', form.value.email);
     formData.append('phone_number', form.value.phone);
     formData.append('candidat_note', form.value.candidat_note);
+    formData.append('linkedin_url', form.value.linkedin_url);
     if (this.selectedFile) {
       formData.append('resume', this.selectedFile);
     }

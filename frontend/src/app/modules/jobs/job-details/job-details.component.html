@@ -228,12 +228,34 @@
               maxlength="8"
               pattern="^[925][0-9]{7}$"
               #phone="ngModel"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
             />
             <p
               *ngIf="phone.invalid && phone.touched"
               class="text-red-500 text-sm"
             >
               Phone number must be 8 digits and start with 9, 2, or 5.
+            </p>
+          </div>
+          <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700"
+              >Linkedin Profile</label
+            >
+            <input
+              type="url"
+              id="linkedin_url"
+              name="linkedin_url"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              placeholder="Enter your linkedin profile "
+              ngModel
+              required
+              #linkedin_url="ngModel"
+            />
+            <p
+              *ngIf="linkedin_url.invalid && linkedin_url.touched"
+              class="text-red-500 text-sm"
+            >
+              URL is required
             </p>
           </div>
 
