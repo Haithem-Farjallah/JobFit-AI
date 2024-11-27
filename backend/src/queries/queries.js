@@ -1,7 +1,6 @@
 /******************************User queries************************** */
 export const findUserQuery = "SELECT * FROM users WHERE email = $1 ";
-export const AddUserQuery =
-  "INSERT INTO users (firstname,lastname,email, password,phone_number) VALUES ($1, $2, $3, $4, $5)";
+
 export const emailQuery =
   "UPDATE users SET email_token = $1 WHERE email = $2 RETURNING *";
 export const activateAccountQuery =
@@ -70,3 +69,9 @@ export const getApplicationsByJobIdQuery =
   "Select A.id, A.firstname,A.lastname,A.hiring_stage, A.created_at,R.score from applications as A JOIN results as R ON A.id = R.application_id WHERE A.job_id = $1 ORDER BY A.created_at DESC ";
 export const rejectApplicationQuery =
   "UPDATE applications SET hiring_stage = 'rejected' WHERE id = $1";
+
+// ******************************Admin queries************************** */
+export const getAllRHQuery =
+  "select U.firstname, U.lastname ,U.email,count(J.posted_by) as Jobs_posted from users as U inner join jobs as J on J.posted_by=U.user_id group by U.user_id ";
+export const AddRHQuery =
+  "INSERT INTO users (firstname,lastname,email, password,phone_number,role) VALUES ($1, $2, $3, $4, $5,$6)";

@@ -10,6 +10,7 @@ export const verifyToken = (req, res, next) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
     req.userId = decoded.id;
+    req.role = decoded.role;
     next();
   } catch (error) {
     console.log(error);
