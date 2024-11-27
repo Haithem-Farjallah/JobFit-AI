@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { JobService } from '@core/services/job.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class JobPostingComponent {
   content = '';
   postJobForm!: FormGroup;
   minDate: Date = new Date();
-  constructor(private jobService: JobService) {}
+  constructor(private jobService: JobService, private router: Router) {}
   ngOnInit() {
     this.postJobForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
@@ -58,6 +59,7 @@ export class JobPostingComponent {
     this.jobService.postJob(this.postJobForm.value).subscribe({
       next: (res) => {
         console.log(res);
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         console.log(err);
