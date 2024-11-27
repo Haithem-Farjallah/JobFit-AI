@@ -5,6 +5,8 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { RhLayoutComponent } from './layouts/rh-layout/rh-layout.component';
 import { authGuard } from '@core/guards/auth.guard';
 import { candidatGuard } from '@core/guards/candidat.guard';
+import { rhGuard } from '@core/guards/role/rh.guard';
+import { adminGuard } from '@core/guards/role/admin.guard';
 const routes: Routes = [
   {
     path: '',
@@ -33,6 +35,7 @@ const routes: Routes = [
       {
         //for rh only
         path: '',
+        canActivate: [rhGuard],
         loadChildren: () =>
           import('./modules/applications/applications.module').then(
             (m) => m.ApplicationsModule
@@ -40,10 +43,18 @@ const routes: Routes = [
       },
       {
         path: '',
+        canActivate: [rhGuard],
         loadChildren: () =>
           import('./modules/recruitement/recruitement.module').then(
             (m) => m.RecruitementModule
           ),
+      },
+      {
+        //for admin
+        path: '',
+        canActivate: [adminGuard],
+        loadChildren: () =>
+          import('./modules/admin/admin.module').then((m) => m.AdminModule),
       },
     ],
   },

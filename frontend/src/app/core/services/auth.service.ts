@@ -43,12 +43,29 @@ export class AuthService {
   getId(): number | null {
     const token = this.getToken();
     if (token) {
-      const decoded = jwtDecode<{ id: number; iat: number; exp: number }>(
-        token
-      );
+      const decoded = jwtDecode<{
+        id: number;
+        role: string;
+        iat: number;
+        exp: number;
+      }>(token);
       return decoded.id;
     }
     return null;
+  }
+  getRole(): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+    const decoded = jwtDecode<{
+      id: number;
+      role: string;
+      iat: number;
+      exp: number;
+    }>(token);
+    console.log(decoded);
+    return decoded.role;
   }
 
   activateAccount(token: string) {

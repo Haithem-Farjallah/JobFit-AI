@@ -113,9 +113,22 @@ const applyJobController = async (req, res) => {
       deleteFile(req.file.filename);
       return res.status(404).json({ message: "Job not found" });
     }
-    const { firstname, lastname, email, phone_number, candidat_note } =
-      req.body;
-    if (!firstname || !lastname || !email || !candidat_note || !phone_number) {
+    const {
+      firstname,
+      lastname,
+      email,
+      phone_number,
+      candidat_note,
+      linkedin_url,
+    } = req.body;
+    if (
+      !firstname?.trim() ||
+      !lastname?.trim() ||
+      !email?.trim() ||
+      !candidat_note?.trim() ||
+      !phone_number?.trim() ||
+      !linkedin_url?.trim()
+    ) {
       deleteFile(req.file.filename);
       return res.status(400).json({ message: "Missing required fields" });
     }
@@ -136,6 +149,7 @@ const applyJobController = async (req, res) => {
       phone_number,
       resume_url,
       candidat_note,
+      linkedin_url,
     ];
     const application = await pool.query(applyJobQuery, values);
     await pool.query(

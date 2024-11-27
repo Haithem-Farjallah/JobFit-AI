@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
 import { AlertService } from 'app/shared/service/alert.service';
+import { roles } from 'config/role';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,12 @@ export class LoginComponent {
             );
           } else {
             this.authService.setToken(data.token);
-            this.router.navigate(['/applications']);
+            const role = this.authService.getRole();
+            if (role === roles.ADMIN) {
+              this.router.navigate(['/rh-list']);
+            } else if (role === roles.RH) {
+              this.router.navigate(['/applications']);
+            }
           }
         },
         error: (error) => {
