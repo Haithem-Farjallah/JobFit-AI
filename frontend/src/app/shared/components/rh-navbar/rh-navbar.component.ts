@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@core/services/auth.service';
+import { roles } from 'config/role';
 
 @Component({
   selector: 'app-rh-navbar',
@@ -7,7 +8,7 @@ import { AuthService } from '@core/services/auth.service';
   styleUrl: './rh-navbar.component.css',
 })
 export class RhNavbarComponent {
-  content = [
+  RHcontent = [
     {
       label: 'Home',
       link: '/home',
@@ -34,7 +35,27 @@ export class RhNavbarComponent {
       image: '/applications.png',
     },
   ];
-  constructor(private authService: AuthService) {}
+  AdminConent = [
+    {
+      label: 'RH-Dashboard',
+      link: '/rh-list',
+      image: '/home.png',
+    },
+    {
+      label: 'add-employee',
+      link: '/new-rh',
+      image: '/home.png',
+    },
+  ];
+  content: { label: string; link: string; image: string }[] = [];
+  constructor(private authService: AuthService) {
+    if (this.authService.getRole() === roles.RH) {
+      this.content = this.RHcontent;
+    } else if (this.authService.getRole() === roles.ADMIN) {
+      this.content = this.AdminConent;
+    }
+  }
+
   logout() {
     this.authService.logout();
   }

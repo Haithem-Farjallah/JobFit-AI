@@ -64,7 +64,6 @@ export class AuthService {
       iat: number;
       exp: number;
     }>(token);
-    console.log(decoded);
     return decoded.role;
   }
 
