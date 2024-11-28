@@ -6,7 +6,7 @@ import { Roles } from "../config/Roles.js";
 const router = express.Router();
 
 router.get(
-  "/rh",
+  "/rh-list",
   verifyToken,
   verifyRole([Roles.ADMIN]),
   adminController.getRHListController
