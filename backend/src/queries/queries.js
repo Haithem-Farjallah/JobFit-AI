@@ -72,6 +72,6 @@ export const rejectApplicationQuery =
 
 // ******************************Admin queries************************** */
 export const getAllRHQuery =
-  "select U.firstname, U.lastname ,U.email,count(J.posted_by) as Jobs_posted from users as U inner join jobs as J on J.posted_by=U.user_id group by U.user_id ";
+  "select U.firstname, U.lastname ,U.email,U.phone_number,U.image_url,count(J.posted_by) as Jobs_posted from users as U full join jobs as J on J.posted_by=U.user_id group by U.user_id ";
 export const AddRHQuery =
   "INSERT INTO users (firstname,lastname,email, password,phone_number,role) VALUES ($1, $2, $3, $4, $5,$6)";

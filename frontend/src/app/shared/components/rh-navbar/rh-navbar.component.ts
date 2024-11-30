@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '@core/services/auth.service';
+import { roles } from 'config/role';
+import { Store } from '@ngrx/store';
+import { selectUser } from 'app/store/user/user.selector';
 
 @Component({
   selector: 'app-rh-navbar',
@@ -7,7 +10,7 @@ import { AuthService } from '@core/services/auth.service';
   styleUrl: './rh-navbar.component.css',
 })
 export class RhNavbarComponent {
-  content = [
+  RHcontent = [
     {
       label: 'Home',
       link: '/home',
@@ -34,7 +37,56 @@ export class RhNavbarComponent {
       image: '/applications.png',
     },
   ];
-  constructor(private authService: AuthService) {}
+  AdminConent = [
+    {
+      label: 'RH-Dashboard',
+      link: '/rh-list',
+      image: '/home.png',
+    },
+    {
+      label: 'add-employee',
+      link: '/new-rh',
+      image: '/home.png',
+    },
+  ];
+  content: { label: string; link: string; image: string }[] = [];
+  userData: {
+    id: number;
+    firstname: string;
+    lastname: string;
+    email: string;
+    image_url: string;
+  } = { id: 0, firstname: '', lastname: '', email: '', image_url: '' };
+  private store = inject(Store);
+  private authService = inject(AuthService);
+  data$ = this.store.select(selectUser);
+  constructor() {
+    this.setRoleContent();
+    this.getAuthUserData();
+  }
+  //set navbar content based on role:
+  setRoleContent() {
+    if (this.authService.getRole() === roles.RH) {
+      this.content = this.RHcontent;
+    } else if (this.authService.getRole() === roles.ADMIN) {
+      this.content = this.AdminConent;
+    }
+  }
+  //get user data from store:
+  getAuthUserData() {
+    this.data$.subscribe((data) => {
+      if (data) {
+        this.userData = {
+          id: data.user_id,
+          firstname: data.firstname,
+          lastname: data.lastname,
+          email: data.email,
+          image_url: data.image_url,
+        };
+      }
+    });
+  }
+
   logout() {
     this.authService.logout();
   }
