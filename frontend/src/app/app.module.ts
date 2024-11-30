@@ -20,7 +20,17 @@ import { MaterialModule } from './modules/material/material.module';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { RhNavbarComponent } from './shared/components/rh-navbar/rh-navbar.component';
 import { RhLayoutComponent } from './layouts/rh-layout/rh-layout.component';
+import { StoreModule, MetaReducer } from '@ngrx/store';
+import { userReducer } from './store/user/user.reducer';
+import { localStorageSync } from 'ngrx-store-localstorage';
 
+function localStorageSyncReducer(reducer: any) {
+  return localStorageSync({
+    keys: ['user'],
+    rehydrate: true,
+  })(reducer);
+}
+const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +41,12 @@ import { RhLayoutComponent } from './layouts/rh-layout/rh-layout.component';
     NotFoundComponent,
     RhLayoutComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MaterialModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MaterialModule,
+    StoreModule.forRoot({ user: userReducer }, { metaReducers }),
+  ],
   providers: [
     provideClientHydration(),
     provideHttpClient(withInterceptors([httpInterceptor]), withFetch()),

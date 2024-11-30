@@ -2,7 +2,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
+import { Store } from '@ngrx/store';
 import { AlertService } from 'app/shared/service/alert.service';
+import { createUser } from 'app/store/user/user.actions';
 import { roles } from 'config/role';
 
 @Component({
@@ -15,7 +17,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private store: Store
   ) {}
   errorMessge = '';
   loading = false;
@@ -38,6 +41,8 @@ export class LoginComponent {
             } else if (role === roles.RH) {
               this.router.navigate(['/applications']);
             }
+            console.log(data.userData);
+            this.store.dispatch(createUser({ user: data.userData }));
           }
         },
         error: (error) => {

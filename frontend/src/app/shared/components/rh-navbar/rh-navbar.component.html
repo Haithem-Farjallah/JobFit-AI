@@ -1,4 +1,4 @@
-<div class="flex flex-col h-screen">
+<div class="flex flex-col h-screen overflow-hidden">
   <div class="flex flex-col mt-5 h-3/4">
     <img src="/Logo.png" alt="logo" class="mb-8 pl-5" />
     <div class="flex flex-col gap-2 mb-5">
@@ -28,11 +28,25 @@
       </div>
     </div>
   </div>
-  <div class="flex items-center h-1/4 pl-5 gap-2">
-    <img src="/avatar.png" alt="avatar" class="h-7" />
-    <div class="text-xs">
-      <h1 class="font-semibold">Haithem Farjallah</h1>
-      <p class="text-[#7C8493]">haithem&#64;gmail.com</p>
+
+  <div class="p-4 border-t border-gray-200 flex items-center">
+    <div class="mr-3">
+      <img
+        class="h-12 rounded-full"
+        [src]="userData.image_url"
+        alt="Profile Picture"
+      />
+    </div>
+    <div class="w-2/3">
+      <h3
+        class="text-gray-900 font-semibold text-sm cursor-pointer"
+        [routerLink]="['/profile', userData.id]"
+      >
+        {{ userData.firstname + userData.lastname }}
+      </h3>
+      <p class="text-gray-500 text-xs break-words">
+        {{ userData.email }}
+      </p>
     </div>
   </div>
 </div>
