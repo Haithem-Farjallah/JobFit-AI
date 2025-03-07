@@ -13,6 +13,7 @@ import { ApplicantsComponent } from './single-job/applicants/applicants.componen
 import { JobDetailsComponent } from './single-job/job-details/job-details.component';
 import { HomeComponent } from './home/home.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { CalendarComponent } from './calendar/calendar.component';
     ReactiveFormsModule,
     QuillModule.forRoot(),
     MaterialModule,
+    FullCalendarModule,
   ],
 })
 export class RecruitementModule {}

@@ -12,7 +12,10 @@
     <div [ngSwitch]="applicationDetails.hiring_stage">
       <div *ngSwitchCase="'pending'" class="flex gap-4">
         <app-reject-button (click)="handleReject()"></app-reject-button>
-        <app-accept-button [value]="'Interview'"></app-accept-button>
+        <app-accept-button
+          [value]="'Interview'"
+          (click)="handleInterview()"
+        ></app-accept-button>
       </div>
       <div *ngSwitchCase="'interview'" class="flex gap-4">
         <app-reject-button (click)="handleReject()"></app-reject-button>
@@ -49,7 +52,7 @@
     <!-- Personal Info Section -->
     <ng-container *ngIf="currentTab === 0">
       <!-- Personal Info Section -->
-      <div class="p-6 bg-white rounded-lg shadow-sm">
+      <div class="p-6 bg-white rounded-lg">
         <h2 class="text-xl font-semibold text-[#25324B] mb-6">Personal Info</h2>
         <div class="grid grid-cols-2 gap-6">
           <div>
@@ -86,17 +89,19 @@
             <label class="text-[#7C8493] text-sm mb-1 block"
               >LinkedIn Profile</label
             >
-            <p class="font-medium text-gray-900">
+            <a
+              [href]="applicationDetails.linkedin_url"
+              target="_blank"
+              class="font-medium text-blue-800"
+            >
               {{ applicationDetails.linkedin_url || "Not mentioned" }}
-            </p>
+            </a>
           </div>
         </div>
       </div>
 
       <!-- Professional Info Section -->
-      <div
-        class="p-6 mt-6 bg-white rounded-lg shadow-sm border-t-2 border-gray-200"
-      >
+      <div class="p-6 mt-2 bg-white border-t-2 border-gray-200">
         <h2 class="text-xl font-semibold text-[#25324B] mb-4">
           Professional Info
         </h2>

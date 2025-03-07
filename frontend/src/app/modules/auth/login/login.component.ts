@@ -27,6 +27,7 @@ export class LoginComponent {
       this.loading = true;
       this.authService.login(form.value).subscribe({
         next: (data: any) => {
+          console.log(data);
           this.loading = false;
           form.reset();
           if (!data.userData.activated_account) {
@@ -36,12 +37,12 @@ export class LoginComponent {
           } else {
             this.authService.setToken(data.token);
             const role = this.authService.getRole();
+            console.log(role);
             if (role === roles.ADMIN) {
               this.router.navigate(['/rh-list']);
             } else if (role === roles.RH) {
               this.router.navigate(['/applications']);
             }
-            console.log(data.userData);
             this.store.dispatch(createUser({ user: data.userData }));
           }
         },

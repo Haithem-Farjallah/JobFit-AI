@@ -5,9 +5,10 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { RhListComponent } from './rh-list/rh-list.component';
 import { NewRhComponent } from './new-rh/new-rh.component';
 import { MaterialModule } from '../material/material.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [RhListComponent, NewRhComponent],
-  imports: [CommonModule, AdminRoutingModule, MaterialModule],
+  imports: [CommonModule, AdminRoutingModule, MaterialModule, FormsModule],
 })
 export class AdminModule {}

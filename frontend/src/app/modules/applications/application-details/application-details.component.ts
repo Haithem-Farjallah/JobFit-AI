@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApplicationsService } from '@core/services/applications.service';
 import { applicationDetails } from 'app/models/applications.model';
 import { environment } from 'environments/environment.development';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-application-details',
@@ -20,6 +21,7 @@ export class ApplicationDetailsComponent {
   constructor(
     private applicationService: ApplicationsService,
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location
   ) {
     const savedTab = localStorage.getItem('currentTab');
@@ -65,5 +67,8 @@ export class ApplicationDetailsComponent {
         console.log(error);
       },
     });
+  }
+  handleInterview() {
+    this.router.navigate(['/schedule-interview']);
   }
 }

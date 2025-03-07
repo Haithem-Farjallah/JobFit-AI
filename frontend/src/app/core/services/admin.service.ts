@@ -14,4 +14,7 @@ export class AdminService {
   getRHList(): Observable<RHList[]> {
     return this.http.get<RHList[]>(`${this.apiUrl}/admin/rh-list`);
   }
+  addRHAccount(formData: RHList): Observable<any> {
+    return this.http.post(`${this.apiUrl}/admin/add-rh`, formData);
+  }
 }
