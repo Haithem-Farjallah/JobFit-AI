@@ -1,4 +1,11 @@
 <div class="">
-  <app-profile-header></app-profile-header>
-  <app-profile-details></app-profile-details>
+  <app-profile-header
+    [userDetails]="data"
+    (openFormEvent)="showForm()"
+  ></app-profile-header>
+  <app-edit-profile
+    *ngIf="isFormVisible"
+    (closeFormEvent)="hideForm()"
+    (submitFormEvent)="onFormSubmit($event)"
+  ></app-edit-profile>
 </div>

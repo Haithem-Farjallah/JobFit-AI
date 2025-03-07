@@ -1,5 +1,5 @@
 <div
-  class="bg-white shadow-lg border-2 rounded-lg max-w-7xl mx-auto w-full overflow-hidden"
+  class="bg-white shadow-lg min-h-[80vh] border-2 rounded-lg max-w-7xl mx-auto w-full overflow-hidden"
 >
   <div class="bg-blue-600">
     <img
@@ -8,33 +8,25 @@
       class="inset-0 w-full h-full object-cover"
     />
   </div>
-  <!-- Profile Info -->
   <div class="flex flex-col items-center p-6">
-    <!-- Profile Picture -->
     <img
       class="sm:w-40 sm:h-40 w-24 h-24 rounded-full border-4 border-white sm:-mt-24 -mt-[4.5rem] object-cover inset-0"
-      src="https://vojislavd.com/ta-template-demo/assets/img/profile.jpg"
+      [src]="userDetails.image_url"
       alt="Profile Picture"
     />
-    <!-- Name -->
-    <h1 class="mt-4 text-xl font-bold">Amanda Ross</h1>
-    <!-- Title -->
+    <h1 class="mt-4 text-xl font-bold">
+      {{ userDetails.firstname + " " + userDetails.lastname }}
+    </h1>
     <p class="text-gray-500 text-sm">
-      Senior Software Engineer at Tailwind CSS
+      {{ userDetails.role }}
     </p>
-    <!-- Location -->
-    <p class="text-gray-400 text-sm mt-1">New York, USA</p>
-    <!-- Buttons -->
+    <p class="text-gray-400 text-sm mt-1">member since : {{ formattedDate }}</p>
     <div class="flex gap-4 mt-4">
       <button
         class="bg-blue-500 text-white py-2 px-4 rounded-lg text-sm hover:bg-blue-600"
+        (click)="openForm()"
       >
         Update Account
-      </button>
-      <button
-        class="border border-gray-300 py-2 px-4 rounded-lg text-sm text-gray-600 hover:bg-gray-100"
-      >
-        Delete Account
       </button>
     </div>
   </div>
