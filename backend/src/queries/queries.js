@@ -19,7 +19,7 @@ export const updateUserQuery = (data) => {
     values.push(data[key]);
   });
   const query = `Update users set ${setClauses.join(",")} where user_id=$${
-    values.length + 1
+    values.length + 1 // values.length+1 is the index of the $n placeholder
   }`;
   return {
     query,

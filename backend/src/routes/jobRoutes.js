@@ -15,10 +15,12 @@ router.get(
   verifyToken,
   jobController.getJobsByRhIdController
 );
+
+const uploadResume = uploadSingle("resume");
 router.post(
   "/:id/applications",
   limiter,
-  uploadSingle,
+  uploadResume,
   jobController.applyJobController
 );
 //limit apply  to 10 per 15 minutes for a single IP
