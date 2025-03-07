@@ -1,6 +1,7 @@
 /******************************User queries************************** */
 export const findUserQuery = "SELECT * FROM users WHERE email = $1 ";
-
+export const AddUserQuery =
+  "INSERT INTO users (firstname,lastname,email, password,phone_number) VALUES ($1, $2, $3, $4, $5)";
 export const emailQuery =
   "UPDATE users SET email_token = $1 WHERE email = $2 RETURNING *";
 export const activateAccountQuery =
@@ -25,6 +26,8 @@ export const updateUserQuery = (data) => {
     values,
   };
 };
+export const getUserQuery = `SELECT user_id,firstname,lastname,email,phone_number,role,image_url,created_at FROM users WHERE user_id = $1`;
+
 /******************************Job queries************************** */
 export const getJobsQuery = `SELECT job_id , title, experience_level, work_type,expiration_date FROM jobs WHERE expiration_date > $1 ORDER BY created_at DESC`;
 export const getSingleJobQuery =
@@ -72,6 +75,6 @@ export const rejectApplicationQuery =
 
 // ******************************Admin queries************************** */
 export const getAllRHQuery =
-  "select U.firstname, U.lastname ,U.email,U.phone_number,U.image_url,count(J.posted_by) as Jobs_posted from users as U full join jobs as J on J.posted_by=U.user_id group by U.user_id ";
+  "select U.firstname, U.lastname ,U.email,U.phone_number,U.image_url,count(J.posted_by) as Jobs_posted from users as U full join jobs as J on J.posted_by=U.user_id where role='rh' group by U.user_id ";
 export const AddRHQuery =
   "INSERT INTO users (firstname,lastname,email, password,phone_number,role) VALUES ($1, $2, $3, $4, $5,$6)";

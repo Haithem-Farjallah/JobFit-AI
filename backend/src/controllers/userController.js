@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import {
   activateAccountQuery,
   deleteUserQuery,
+  getUserQuery,
   recoverPasswordQuery,
   updateUserQuery,
 } from "../queries/queries.js";
@@ -77,6 +78,22 @@ const recoverPassword = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+const getUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (id != req.userId) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    const data = await pool.query(getUserQuery, [id]);
+    if (data.rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.status(200).json(data.rows[0]);
+  } catch (error) {
+    console.error("Error getting user:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 export default {
   activateAccount,
@@ -84,4 +101,5 @@ export default {
   deleteUser,
   updateUser,
   verifyPasswordToken,
+  getUser,
 };
