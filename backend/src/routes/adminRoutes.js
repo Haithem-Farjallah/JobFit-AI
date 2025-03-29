@@ -13,7 +13,7 @@ router.get(
 );
 router.post(
   "/add-rh",
-  verifyToken,
+
   verifyRole([Roles.ADMIN]),
   adminController.addRHController
 );

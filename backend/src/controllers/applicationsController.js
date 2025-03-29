@@ -2,6 +2,7 @@ import pool from "../config/DB.js";
 import {
   getApplicationsByJobIdQuery,
   getApplicationsQuery,
+  getCountPendingApplicationsQuery,
   getSingleApplicationQuery,
   rejectApplicationQuery,
 } from "../queries/queries.js";
@@ -41,6 +42,20 @@ const getApplicationsByJobIdController = async (req, res) => {
   }
 };
 
+const getCountPendingApplicationsController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (req.userId != id) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    const count = await pool.query(getCountPendingApplicationsQuery, [id]);
+    res.status(200).json(count.rows[0].count);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 const rejectApplicationController = async (req, res) => {
   try {
     const id = req.params.id;
@@ -57,5 +72,6 @@ export default {
   getApplicationsController,
   getSingleApplicationController,
   getApplicationsByJobIdController,
+  getCountPendingApplicationsController,
   rejectApplicationController,
 };

@@ -17,6 +17,9 @@ const updateUser = async (req, res) => {
         ([key, value]) => value !== null && value !== ""
       )
     );
+    if (data.password) {
+      data.password = await bcrypt.hash(data.password, 10);
+    }
     const { query, values } = updateUserQuery(data);
     await pool.query(query, [...values, id]);
     res.status(200).json({ message: "User updated" });
@@ -94,7 +97,6 @@ const getUser = async (req, res) => {
     if (data.rows.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log(data.rows[0]);
     return res.status(200).json(data.rows[0]);
   } catch (error) {
     console.error("Error getting user:", error);

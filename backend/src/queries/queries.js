@@ -73,6 +73,8 @@ export const getApplicationsByJobIdQuery =
 export const rejectApplicationQuery =
   "UPDATE applications SET hiring_stage = 'rejected' WHERE id = $1";
 
+export const getCountPendingApplicationsQuery = `select count(hiring_stage) from applications A join jobs J on A.job_id=J.job_id where hiring_stage='pending' and posted_by=$1;`;
+
 // ******************************Admin queries************************** */
 export const getAllRHQuery =
   "select U.firstname, U.lastname ,U.email,U.phone_number,U.image_url,count(J.posted_by) as Jobs_posted from users as U full join jobs as J on J.posted_by=U.user_id where role='rh' group by U.user_id ";
