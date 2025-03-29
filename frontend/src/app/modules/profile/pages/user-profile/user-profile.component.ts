@@ -1,7 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '@core/services/user.service';
+import { Store } from '@ngrx/store';
 import { AlertService } from 'app/shared/service/alert.service';
+import { updateUser } from 'app/store/user/user.actions';
 
 @Component({
   selector: 'app-user-profile',
@@ -12,7 +14,7 @@ export class UserProfileComponent {
   route = inject(ActivatedRoute);
   userService = inject(UserService);
   alertService = inject(AlertService);
-
+  store = inject(Store);
   data: any;
   isFormVisible = false;
   constructor() {
@@ -22,6 +24,7 @@ export class UserProfileComponent {
   getData() {
     this.route.data.subscribe((data) => {
       this.data = data['details'];
+      console.log(data);
     });
   }
 
@@ -42,9 +45,9 @@ export class UserProfileComponent {
           this.userService.getUserDetails(id).subscribe({
             next: (data) => {
               this.data = data;
+              this.store.dispatch(updateUser({ user: data }));
             },
           });
-          console.log(this.data);
         });
       },
       error: () => {

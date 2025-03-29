@@ -3,6 +3,7 @@ import { AuthService } from '@core/services/auth.service';
 import { roles } from 'config/role';
 import { Store } from '@ngrx/store';
 import { selectUser } from 'app/store/user/user.selector';
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-rh-navbar',
@@ -10,6 +11,8 @@ import { selectUser } from 'app/store/user/user.selector';
   styleUrl: './rh-navbar.component.css',
 })
 export class RhNavbarComponent {
+  private profilepicsUrl = environment.profilepicsUrl;
+
   RHcontent = [
     {
       label: 'Home',
@@ -81,7 +84,7 @@ export class RhNavbarComponent {
           firstname: data.firstname,
           lastname: data.lastname,
           email: data.email,
-          image_url: data.image_url,
+          image_url: this.profilepicsUrl + data.image_url,
         };
       }
     });

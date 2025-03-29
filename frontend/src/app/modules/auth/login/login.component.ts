@@ -41,7 +41,7 @@ export class LoginComponent {
             if (role === roles.ADMIN) {
               this.router.navigate(['/rh-list']);
             } else if (role === roles.RH) {
-              this.router.navigate(['/applications']);
+              this.router.navigate(['/home']);
             }
             this.store.dispatch(createUser({ user: data.userData }));
           }

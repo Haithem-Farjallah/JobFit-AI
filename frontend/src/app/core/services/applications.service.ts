@@ -48,6 +48,9 @@ export class ApplicationsService {
       `${this.apiUrl}/applications/job/${id}`
     );
   }
+  getPendingApplicationCount(id: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/applications/count/${id}`);
+  }
 
   rejectApplication(id: number): Observable<any> {
     return this.http.patch(`${this.apiUrl}/applications/reject/${id}`, {});

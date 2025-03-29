@@ -9,7 +9,7 @@
           [routerLinkActiveOptions]="{ exact: false }"
           class="cursor-pointer flex items-center gap-2 pl-5 py-3 font-medium text-sm text-[#7C8493]"
         >
-          <img [src]="c.image" alt="image" class="h-5" />
+          <img [src]="c.image" alt="image" class="h-4" />
           <h1 class="pt-1">{{ c.label }}</h1>
         </div>
       </div>
@@ -32,8 +32,9 @@
   <div class="p-4 border-t border-gray-200 flex items-center">
     <div class="mr-3">
       <img
-        class="h-12 rounded-full"
+        class="h-12 w-12 rounded-full"
         [src]="userData.image_url"
+        appFallbackImage="/profilepic.webp"
         alt="Profile Picture"
       />
     </div>

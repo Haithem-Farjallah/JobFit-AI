@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUser } from 'app/store/user/user.selector';
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-rh-layout',
@@ -8,6 +9,7 @@ import { selectUser } from 'app/store/user/user.selector';
   styleUrl: './rh-layout.component.css',
 })
 export class RhLayoutComponent {
+  private profilepicsUrl = environment.profilepicsUrl;
   userData: {
     firstname: string;
     lastname: string;
@@ -23,7 +25,7 @@ export class RhLayoutComponent {
           firstname: data.firstname,
           lastname: data.lastname,
           email: data.email,
-          image_url: data.image_url,
+          image_url: this.profilepicsUrl + data.image_url,
         };
       }
     });

@@ -5,6 +5,7 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from 'app/shared/modules/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,6 @@ import { FormsModule } from '@angular/forms';
     EditProfileComponent,
     ProfileHeaderComponent,
   ],
-  imports: [CommonModule, ProfileRoutingModule, FormsModule],
+  imports: [CommonModule, ProfileRoutingModule, FormsModule, SharedModule],
 })
 export class ProfileModule {}

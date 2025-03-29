@@ -1,5 +1,9 @@
 <div class="p-6">
-  <h1 class="text-xl font-semibold mb-4">Good morning, Maria</h1>
+  <h1 class="text-xl font-semibold mb-4">
+    Welcome back,
+    {{ user?.firstname + " " + user?.lastname }}
+    !
+  </h1>
   <p class="text-sm text-gray-600 mb-6">
     Here is your daily activities and job alerts
   </p>
@@ -8,8 +12,8 @@
     <div
       class="bg-indigo-500 text-white p-4 rounded-lg shadow-md flex flex-col items-start"
     >
-      <p class="text-4xl font-bold mb-2">76</p>
-      <p>New candidates to review</p>
+      <p class="text-4xl font-bold mb-2">{{ pendingReviews }}</p>
+      <p>Candidates to review</p>
     </div>
 
     <!-- Schedule for Today -->

@@ -5,5 +5,9 @@ export const createUser = createAction(
   '[Login Page],Create User',
   props<{ user: AuthUser }>()
 );
+export const updateUser = createAction(
+  '[update User] Update User',
+  props<{ user: AuthUser }>()
+);
 
 export const logoutUser = createAction('Logout User');
