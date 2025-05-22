@@ -29,4 +29,7 @@ export class JobService {
   postJob(form: any) {
     return this.http.post(`${this.apiUrl}/jobs`, form);
   }
+  getJobStats(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/jobs/count/${id}`);
+  }
 }

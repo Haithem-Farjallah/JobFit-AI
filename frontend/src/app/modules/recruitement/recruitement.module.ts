@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgChartsModule } from 'ng2-charts';
 
 import { RecruitementRoutingModule } from './recruitement-routing.module';
 import { JobPostingComponent } from './job-posting/job-posting.component';
@@ -34,6 +35,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     QuillModule.forRoot(),
     MaterialModule,
     FullCalendarModule,
+    NgChartsModule,
   ],
 })
 export class RecruitementModule {}

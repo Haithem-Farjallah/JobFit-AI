@@ -47,12 +47,14 @@
         <p class="text-sm font-semibold">share this job :</p>
         <div class="flex items-center gap-2">
           <div
+            (click)="shareOnFacebook()"
             class="flex gap-2 border border-blue-100 p-2 text-sm rounded cursor-pointer"
           >
             <img src="/facebook.png" alt="facebook" />
             <span class="sm:block hidden">Facebook</span>
           </div>
           <div
+            (click)="shareOnLinkedIn()"
             class="flex gap-2 border border-blue-100 p-2 text-sm rounded cursor-pointer"
           >
             <img src="/linkedin.png" alt="linkedin" class="h-5" />
@@ -79,6 +81,7 @@
           <div class="flex items-center gap-2 mb-5">
             <img
               [src]="jobDetails.image_url"
+              appFallbackImage="/profilepic.webp"
               alt="rh image"
               class="h-10 w-10 rounded-full"
             />

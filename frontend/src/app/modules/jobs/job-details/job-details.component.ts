@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JobService } from '@core/services/job.service';
 import { JobDetails } from 'app/models/job.model';
 import { AlertService } from 'app/shared/service/alert.service';
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-job-details',
@@ -11,6 +12,7 @@ import { AlertService } from 'app/shared/service/alert.service';
   styleUrl: './job-details.component.css',
 })
 export class JobDetailsComponent implements OnInit {
+  profilepicsUrl = environment.profilepicsUrl;
   selectedFile: File | null = null;
   invalidFile: boolean = false;
   additionalInfo: string = '';
@@ -22,7 +24,8 @@ export class JobDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private jobService: JobService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -31,6 +34,10 @@ export class JobDetailsComponent implements OnInit {
     });
     this.route.data.subscribe((data) => {
       this.jobDetails = data['details'].job;
+      this.jobDetails = {
+        ...this.jobDetails,
+        image_url: this.profilepicsUrl + this.jobDetails.image_url,
+      };
       this.formattedExpirationDate = this.dateFormat(
         this.jobDetails.expiration_date
       );
@@ -104,6 +111,22 @@ export class JobDetailsComponent implements OnInit {
   onInput(event: any): void {
     this.additionalInfo = event.target.value;
   }
+
+  shareOnFacebook() {
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      window.location.origin + this.router.url
+    )}`;
+    console.log(url);
+    window.open(url, '_blank');
+  }
+
+  shareOnLinkedIn() {
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+      window.location.origin + this.router.url
+    )}`;
+    window.open(url, '_blank');
+  }
+
   handleSubmit(form: NgForm) {
     const formData = new FormData();
     formData.append('firstname', form.value.firstName);

@@ -23,5 +23,10 @@ router.post(
   uploadResume,
   jobController.applyJobController
 );
+router.get(
+  "/count/:id",
+  verifyToken,
+  jobController.getJobsAndCountApplicationsController
+);
 //limit apply  to 10 per 15 minutes for a single IP
 export default router;

@@ -34,6 +34,7 @@ export class ApplicationDetailsComponent {
     });
     this.applicationService.getSingleApplication(this.id)?.subscribe({
       next: (data) => {
+        console.log(data);
         this.applicationDetails = data;
         this.setPdfUrl(data.resume_url);
         this.loading = false;
@@ -58,17 +59,29 @@ export class ApplicationDetailsComponent {
     this.location.back();
   }
   handleReject() {
-    this.applicationService.rejectApplication(this.id).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.goback();
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    this.applicationService
+      .rejectApplication(this.id, this.applicationDetails.email)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+          this.goback();
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
-  handleInterview() {
-    this.router.navigate(['/schedule-interview']);
+  handleAccept() {
+    this.applicationService
+      .acceptApplication(this.id, this.applicationDetails.email)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+          this.goback();
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 }

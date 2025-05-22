@@ -13,16 +13,12 @@
       <div *ngSwitchCase="'pending'" class="flex gap-4">
         <app-reject-button (click)="handleReject()"></app-reject-button>
         <app-accept-button
-          [value]="'Interview'"
-          (click)="handleInterview()"
+          [value]="'Accept'"
+          (click)="handleAccept()"
         ></app-accept-button>
       </div>
-      <div *ngSwitchCase="'interview'" class="flex gap-4">
-        <app-reject-button (click)="handleReject()"></app-reject-button>
-        <app-accept-button [value]="'Hire'"></app-accept-button>
-      </div>
-      <div *ngSwitchCase="'hired'" class="text-green-600 font-semibold">
-        Candidate Hired
+      <div *ngSwitchCase="'accepted'" class="text-green-600 font-semibold">
+        Candidate accepted
       </div>
       <div *ngSwitchCase="'rejected'" class="text-red-600 font-semibold">
         Candidate Rejected

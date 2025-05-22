@@ -28,7 +28,7 @@ export class NewRhComponent {
     this.adminService.addRHAccount(this.formData).subscribe({
       next: () => {
         this.alertService.showMessage('RH account created successfully');
-        this.router.navigate(['/admin/rh-list']);
+        this.router.navigate(['/rh-list']);
       },
       error: (err) => {
         if (err.status === 409) {

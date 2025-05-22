@@ -38,6 +38,7 @@ const addRHController = async (req, res) => {
     await pool.query(AddRHQuery, insertValues);
     res.status(201).json({ message: "User Created" });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "internal server error" });
   }
 };

@@ -5,12 +5,15 @@ import { RHList } from 'app/models/RHList.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { environment } from 'environments/environment.development';
 @Component({
   selector: 'app-rh-list',
   templateUrl: './rh-list.component.html',
   styleUrl: './rh-list.component.css',
 })
 export class RhListComponent implements AfterViewInit {
+  private profilepicsUrl = environment.profilepicsUrl;
+
   displayedColumns: string[] = [
     'image_url',
     'firstname',
@@ -32,6 +35,10 @@ export class RhListComponent implements AfterViewInit {
   getRHList() {
     this.adminService.getRHList().subscribe({
       next: (data: RHList[]) => {
+        console.log(data);
+        data.forEach((item) => {
+          item.image_url = this.profilepicsUrl + item.image_url;
+        });
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

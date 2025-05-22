@@ -34,11 +34,11 @@ export class RhNavbarComponent {
       link: '/applications',
       image: '/applications.png',
     },
-    {
-      label: 'Schedules',
-      link: '/schedule-interview',
-      image: '/applications.png',
-    },
+    // {
+    //   label: 'Schedules',
+    //   link: '/schedule-interview',
+    //   image: '/applications.png',
+    // },
   ];
   AdminConent = [
     {

@@ -53,6 +53,7 @@ export const deleteQuery = `DELETE FROM jobs WHERE job_id = $1`;
 export const applyJobQuery = `INSERT INTO applications (job_id,firstname,lastname,email,phone_number,resume_url,candidat_note,linkedin_url) VALUES ($1, $2, $3, $4, $5, $6, $7,$8) RETURNING id`;
 export const validateJobIdQuery = `SELECT title,description,experience_level FROM jobs WHERE job_id = $1`;
 
+export const getJobAndCountApplicationsQuery = `SELECT  title,application_count from jobs where posted_by=$1 `;
 export const getJobsRh =
   "select job_id,title,experience_level,work_type,application_count,created_at,expiration_date from jobs where posted_by=$1";
 // ******************************Applications queries************************** */
@@ -70,10 +71,12 @@ export const getSingleApplicationQuery =
   "SELECT A.firstname ,A.lastname,A.email,A.hiring_stage,A.phone_number,A.candidat_note,A.resume_url,A.linkedin_url,A.job_id,R.score,R.matched_keywords,R.summary from applications as A JOIN results as R ON A.id = R.application_id WHERE A.id = $1";
 export const getApplicationsByJobIdQuery =
   "Select A.id, A.firstname,A.lastname,A.hiring_stage, A.created_at,R.score from applications as A JOIN results as R ON A.id = R.application_id WHERE A.job_id = $1 ORDER BY A.created_at DESC ";
-export const rejectApplicationQuery =
-  "UPDATE applications SET hiring_stage = 'rejected' WHERE id = $1";
+export const updateStatusApplicationQuery =
+  "UPDATE applications SET hiring_stage = $1 WHERE id = $2 RETURNING job_id";
 
 export const getCountPendingApplicationsQuery = `select count(hiring_stage) from applications A join jobs J on A.job_id=J.job_id where hiring_stage='pending' and posted_by=$1;`;
+export const getCountAcceptedApplicationsQuery = `select count(hiring_stage) from applications A join jobs J on A.job_id=J.job_id where hiring_stage='accepted' and posted_by=$1;`;
+export const getCountRejectedApplicationsQuery = `select count(hiring_stage) from applications A join jobs J on A.job_id=J.job_id where hiring_stage='rejected' and posted_by=$1;`;
 
 // ******************************Admin queries************************** */
 export const getAllRHQuery =

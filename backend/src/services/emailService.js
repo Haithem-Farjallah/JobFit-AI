@@ -1,3 +1,4 @@
+import { application } from "express";
 import transporter from "../config/nodemailer.js";
 import emailTemplate from "../utils/emailTemplate.js";
 const sendEmailVerification = async (email, username, token) => {
@@ -26,4 +27,34 @@ const sendPasswordResetEmail = async (email, username, token) => {
     console.log(error);
   }
 };
-export default { sendEmailVerification, sendPasswordResetEmail };
+const sendRejectionEmail = async (email, jobTitle) => {
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: email,
+      subject: "Application Rejected",
+      html: emailTemplate.rejectionTemplate(jobTitle),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const sendAcceptanceEmail = async (email, jobTitle) => {
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: email,
+      subject: "Application Accepted",
+      html: emailTemplate.acceptanceTemplate(jobTitle),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export default {
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  sendRejectionEmail,
+  sendAcceptanceEmail,
+};

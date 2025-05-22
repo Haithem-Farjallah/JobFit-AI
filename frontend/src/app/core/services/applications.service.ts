@@ -51,8 +51,23 @@ export class ApplicationsService {
   getPendingApplicationCount(id: number): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/applications/count/${id}`);
   }
+  getAcceptedApplicationCount(id: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/applications/accepted/${id}`);
+  }
+  getRejectedApplicationCount(id: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/applications/rejected/${id}`);
+  }
 
-  rejectApplication(id: number): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/applications/reject/${id}`, {});
+  rejectApplication(id: number, email: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/applications/${id}`, {
+      email,
+      status: 'rejected',
+    });
+  }
+  acceptApplication(id: number, email: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/applications/${id}`, {
+      email,
+      status: 'accepted',
+    });
   }
 }

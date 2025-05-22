@@ -21,14 +21,26 @@ router.get(
   applicaionsController.getApplicationsByJobIdController
 );
 router.patch(
-  "/reject/:id",
+  "/:id",
   verifyToken,
-  applicaionsController.rejectApplicationController
+  applicaionsController.updateApplicationController
 );
 router.get(
   "/count/:id",
   verifyToken,
   verifyRole([Roles.RH]),
   applicaionsController.getCountPendingApplicationsController
+);
+router.get(
+  "/accepted/:id",
+  verifyToken,
+  verifyRole([Roles.RH]),
+  applicaionsController.getCountAcceptedApplicationsController
+);
+router.get(
+  "/rejected/:id",
+  verifyToken,
+  verifyRole([Roles.RH]),
+  applicaionsController.getCountRejectedApplicationsController
 );
 export default router;

@@ -3,6 +3,7 @@ import {
   applyJobQuery,
   deleteQuery,
   existingemailQuery,
+  getJobAndCountApplicationsQuery,
   getJobsQuery,
   getJobsRh,
   getSingleJobQuery,
@@ -191,6 +192,17 @@ const getJobsByRhIdController = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+const getJobsAndCountApplicationsController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const values = [id];
+    const jobs = await pool.query(getJobAndCountApplicationsQuery, values);
+    return res.status(200).json({ jobs: jobs.rows });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 
 export default {
   getJobsController,
@@ -200,4 +212,5 @@ export default {
   deleteJobController,
   applyJobController,
   getJobsByRhIdController,
+  getJobsAndCountApplicationsController,
 };

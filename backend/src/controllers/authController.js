@@ -25,7 +25,6 @@ const login = async (req, res) => {
     if (!validPassword) {
       return res.status(401).json({ message: "Invalid Credentials" });
     }
-    console.log(user.role);
     const token = generateToken(user.user_id, user.role);
     if (!user.activated_account) {
       const response = await pool.query(emailQuery, [
